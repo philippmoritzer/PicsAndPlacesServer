@@ -18,16 +18,12 @@ exports.login = async (req, res) => {
         result = result[0];
         if (req.body.password == result.password) {
             let token = jwt.sign({ id: result.id, name: result.name, mail: result.mail, role: result.role }, 'Supersecret', { expiresIn: 129600 });
-            res.json({
-                success: true,
-                error: null,
-                token
-
-            })
+            res.json({ token });
+        } else {
+            res.status(401).send();
         }
-        res.status(401).send();
     }).catch(error => {
-        res.send(error);
+        res.status(500).send(error);
     });
 }
 

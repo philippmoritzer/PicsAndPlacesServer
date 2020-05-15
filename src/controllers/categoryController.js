@@ -10,7 +10,9 @@ exports.get_categories = async (req, res) => {
   await getCategories().then(result => {
     res.json(result);
   }).catch(error => {
-    res.send(error)
+
+    res.status(401).send(error);
+
   });
 
 };
