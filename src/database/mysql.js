@@ -1,10 +1,28 @@
 const mysql = require("mysql");
 
+/**
+ * local connection
+ */
+/*
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "admin",
   database: "pics_and_places",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});*/
+
+/**
+ *  HSB Connection
+ */
+const connection = mysql.createConnection({
+  host: "195.37.176.178",
+  port: 20133,
+  user: "Gruppe2",
+  password: "$dl5VX%wcwCmKymlP=`OSy1B'SMUmWp$",
+  database: "20_Gruppe2_DB",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

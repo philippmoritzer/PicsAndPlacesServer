@@ -4,7 +4,7 @@ async function getCategories() {
   const database = await getDatabase();
   return new Promise((resolve, reject) => {
     database.query(
-      "SELECT * FROM pics_and_places.category;",
+      "SELECT id, name FROM category;",
       async (err, rows, fields) => {
         if (!err) {
           resolve(rows);
@@ -21,7 +21,7 @@ async function getCategoryById(id) {
   const database = await getDatabase();
   return new Promise((resolve, reject) => {
     database.query(
-      "SELECT * FROM pics_and_places.category WHERE id = " + id + ";",
+      "SELECT id, name FROM category WHERE id = " + id + ";",
       async (err, rows, fields) => {
         if (!err) {
           resolve(rows);
@@ -39,7 +39,7 @@ async function insertCategory(name) {
 
   return new Promise((resolve, reject) => {
     database.query(
-      "INSERT INTO pics_and_places.category VALUES (null, '" + name + "');",
+      "INSERT INTO category VALUES (null, '" + name + "');",
       (err, rows, fields) => {
         if (!err) {
           resolve(rows);
@@ -56,11 +56,11 @@ async function updateCategory(id, name) {
 
   return new Promise((resolve, reject) => {
     database.query(
-      "UPDATE pics_and_places.category SET name = '" +
-        name +
-        "' WHERE id = '" +
-        id +
-        "';",
+      "UPDATE category SET name = '" +
+      name +
+      "' WHERE id = '" +
+      id +
+      "';",
       (err, rows, fields) => {
         if (!err) {
           resolve(rows);
@@ -77,7 +77,7 @@ async function deleteCategory(id) {
 
   return new Promise((resolve, reject) => {
     database.query(
-      "DELETE FROM pics_and_places.category WHERE id = '" + id + "';",
+      "DELETE FROM category WHERE id = '" + id + "';",
       (err, rows, fields) => {
         if (!err) {
           resolve(rows);

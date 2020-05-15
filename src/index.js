@@ -3,10 +3,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const exjwt = require('express-jwt');
 const { startDatabase } = require("./database/mysql");
 
 //routes
 var categoryRouter = require("./routes/categoryRouter");
+var userRouter = require("./routes/userRouter");
 
 // defining the Express app
 const app = express();
@@ -25,6 +27,7 @@ app.use(morgan("combined"));
 
 //register routes
 app.use("/category", categoryRouter);
+app.use("/auth", userRouter);
 
 // starting the server
 startDatabase().then(async () => {
