@@ -3,11 +3,7 @@ const {
 } = require("../database/user");
 
 const jwt = require('jsonwebtoken');
-const exjwt = require('express-jwt');
 
-const jwtMW = exjwt({
-    secret: 'Supersecret'
-});
 
 /**
  * login function that sends back an AWT-Token to get access to authenticated API-Endpoints
@@ -27,4 +23,3 @@ exports.login = async (req, res) => {
     });
 }
 
-exports.jwtMW = jwtMW;

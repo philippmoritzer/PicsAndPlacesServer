@@ -8,6 +8,7 @@ const { startDatabase } = require("./database/mysql");
 
 //routes
 var categoryRouter = require("./routes/categoryRouter");
+var locationRouter = require("./routes/locationRouter");
 var userRouter = require("./routes/userRouter");
 
 // defining the Express app
@@ -26,8 +27,10 @@ app.use(cors());
 app.use(morgan("combined"));
 
 //register routes
-app.use("/category", categoryRouter);
 app.use("/auth", userRouter);
+app.use("/location", locationRouter);
+app.use("/category", categoryRouter);
+
 
 // starting the server
 startDatabase().then(async () => {

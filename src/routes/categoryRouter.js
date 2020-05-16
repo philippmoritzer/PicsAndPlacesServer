@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 var category_controller = require("../controllers/categoryController");
-var jwtMW = require("../controllers/userController").jwtMW;
+var jwtMW = require("../middleware/jwtMiddleware").jwtMW;
 
 router.get("/", jwtMW, category_controller.get_categories);
 router.get("/:id", category_controller.get_category_by_id);
