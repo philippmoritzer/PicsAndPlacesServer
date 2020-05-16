@@ -38,32 +38,49 @@ async function insertLocation(location) {
     const database = await getDatabase();
     let city_query = "INSERT INTO city VALUES('" + location.address.zipcode + "', '" + location.address.city + "');"
     return new Promise((resolve, reject) => {
-
-        database.query(city_query, (err, rows, fields) => {
-            if (!err) {
-                let address_query = "INSERT INTO address VALUES (null, '" + location.address.street + "', '" + location.address.number + "', '" + location.address.zipcode + "');"
-                database.query(address_query, (err, rows) => {
-                    if (!err) {
-                        let query = "INSERT INTO location VALUES (null, '" + location.name + "', '" + location.description + "', '" + location.latitude + "', '" + location.longitude + "', '" + location.category_id + "', '" + rows.insertId + "', " + location.create_user_id + ", now(), null);";
-                        database.query(
-                            query,
-                            (err, rows, fields) => {
-                                if (!err) {
-                                    resolve(rows);
-                                } else {
-                                    reject(err);
-                                }
-                            }
-                        );
-
-                    } else {
+        //check if zipcode already exists, if not, insert into database
+        database.query("SELECT city.zipcode FROM city WHERE city.zipcode = '" + location.address.zipcode + "' LIMIT 1;", (err, rows) => {
+            if (rows.length < 1) {
+                database.query(city_query, (err, rows) => {
+                    if (err) {
                         reject(err);
                     }
+                    let address_query = "INSERT INTO address VALUES (null, '"
+                        + location.address.street + "', '"
+                        + location.address.number + "', '"
+                        + location.address.zipcode + "');";
+                    //add address into the databse
+                    database.query(address_query, (err, rows) => {
+                        if (!err) {
+                            let query = "INSERT INTO location VALUES (null, '"
+                                + location.name + "', '"
+                                + location.description + "', '"
+                                + location.latitude + "', '"
+                                + location.longitude + "', '"
+                                + location.category_id + "', '"
+                                + rows.insertId + "', "
+                                + location.create_user_id
+                                + ", now(), null);";
+                            //if address was successfully inserted, insert location data
+                            database.query(
+                                query,
+                                (err, rows, fields) => {
+                                    if (!err) {
+                                        resolve(rows);
+                                    } else {
+                                        reject(err);
+                                    }
+                                }
+                            );
+
+                        } else {
+                            reject(err);
+                        }
+                    });
                 });
-            } else {
-                reject(err);
             }
         });
+
     });
 
 }
