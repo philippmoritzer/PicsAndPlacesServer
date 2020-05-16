@@ -23,8 +23,10 @@ exports.get_location_by_id = async (req, res) => {
 };
 
 exports.insert_location = async (req, res) => {
-    await insertLocation(req.body.name).then(result => {
+    await insertLocation(req.body.location).then(result => {
+        res.status(200).send("successfully inserted location");
     }).catch(error => {
+        console.log(error);
     })
 };
 

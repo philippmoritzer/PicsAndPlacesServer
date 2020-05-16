@@ -34,21 +34,38 @@ async function getLocationById(id) {
     });
 }
 
-async function insertLocation(name) {
+async function insertLocation(location) {
     const database = await getDatabase();
-
+    let city_query = "INSERT INTO city VALUES('" + location.address.zipcode + "', '" + location.address.city + "');"
     return new Promise((resolve, reject) => {
-        database.query(
-            "INSERT INTO category VALUES (null, '" + name + "');",
-            (err, rows, fields) => {
-                if (!err) {
-                    resolve(rows);
-                } else {
-                    reject(err);
-                }
+
+        database.query(city_query, (err, rows, fields) => {
+            if (!err) {
+                let address_query = "INSERT INTO address VALUES (null, '" + location.address.street + "', '" + location.address.number + "', '" + location.address.zipcode + "');"
+                database.query(address_query, (err, rows) => {
+                    if (!err) {
+                        let query = "INSERT INTO location VALUES (null, '" + location.name + "', '" + location.description + "', '" + location.latitude + "', '" + location.longitude + "', '" + location.category_id + "', '" + rows.insertId + "', " + location.create_user_id + ", now(), null);";
+                        database.query(
+                            query,
+                            (err, rows, fields) => {
+                                if (!err) {
+                                    resolve(rows);
+                                } else {
+                                    reject(err);
+                                }
+                            }
+                        );
+
+                    } else {
+                        reject(err);
+                    }
+                });
+            } else {
+                reject(err);
             }
-        );
+        });
     });
+
 }
 
 async function updateLocation(id, name) {
