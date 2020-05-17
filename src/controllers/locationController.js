@@ -29,7 +29,6 @@ exports.insert_location = async (req, res) => {
         console.log(error);
     })
 };
-
 exports.update_location = async (req, res) => {
     await updateCategory(req.params.id, req.body.name).then(result => {
     }).catch(error => {
