@@ -2,9 +2,18 @@ const { getDatabase } = require("./mysql");
 
 async function getLocations() {
     const database = await getDatabase();
+    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, address.street,"
+        + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
+        + " FROM location INNER JOIN category ON category.id = location.category_id"
+        + " INNER JOIN user ON user.id = location.create_user_id"
+        + " INNER JOIN address ON location.address_id = address.id"
+        + " INNER JOIN city ON address.zipcode = city.zipcode AND address.country_id = city.country_id"
+        + " INNER JOIN country ON city.country_id = country.id";
+    console.log(query);
     return new Promise((resolve, reject) => {
+
         database.query(
-            "SELECT id, name FROM category;",
+            query,
             async (err, rows, fields) => {
                 if (!err) {
                     resolve(rows);
@@ -39,8 +48,8 @@ async function insertLocation(location) {
 
     return new Promise((resolve, reject) => {
         //check if country already exists, if not, insert into database and retrive foreign key for city table
-        let country_exists_query = "SELECT id, country.name FROM country WHERE country.name = '" + location.address.country + "' LIMIT 1;"
-        let country_query = "INSERT INTO country VALUES (null, '" + location.address.country + "');";
+        let country_exists_query = "SELECT id, country.name FROM country WHERE country.name = '" + location.address.country.name + "' LIMIT 1;"
+        let country_query = "INSERT INTO country VALUES (null, '" + location.address.country.name + "');";
         let country_id = null;
         database.query(country_exists_query, (err, rows) => {
             if (!err) {
@@ -112,7 +121,7 @@ const insertAddressAndLocation = (database, location, country_id) => {
         let address_query = "INSERT INTO address VALUES (null, '"
             + location.address.street + "', '"
             + location.address.number + "', '"
-            + location.address.zipcode + "', '"
+            + location.address.city.zipcode + "', '"
             + country_id + "');";
         //add address into the databse
         database.query(address_query, (err, rows) => {
@@ -122,9 +131,9 @@ const insertAddressAndLocation = (database, location, country_id) => {
                     + location.description + "', '"
                     + location.latitude + "', '"
                     + location.longitude + "', '"
-                    + location.category_id + "', '"
+                    + location.category.id + "', '"
                     + rows.insertId + "', "
-                    + location.create_user_id
+                    + location.createUser.id
                     + ", now(), null);";
                 //if address was successfully inserted, insert location data
                 database.query(
@@ -148,8 +157,8 @@ const insertAddressAndLocation = (database, location, country_id) => {
 const insertAddressAfterCountry = (database, location, country_id) => {
     return new Promise((resolve, reject) => {
         //check if zipcode already exists, if not, insert into database
-        let city_query = "INSERT INTO city VALUES('" + location.address.zipcode + "','" + country_id + "', '" + location.address.city + "');"
-        let city_exists_query = "SELECT city.zipcode FROM city WHERE city.zipcode = '" + location.address.zipcode + "' AND country_id = '" + country_id + "' LIMIT 1;"
+        let city_query = "INSERT INTO city VALUES('" + location.address.city.zipcode + "','" + country_id + "', '" + location.address.city.name + "');"
+        let city_exists_query = "SELECT city.zipcode FROM city WHERE city.zipcode = '" + location.address.city.zipcode + "' AND country_id = '" + country_id + "' LIMIT 1;"
 
         database.query(city_exists_query, (err, rows) => {
             if (rows.length < 1) { //city does not exist yet -> insert city

@@ -7,7 +7,44 @@ const {
 } = require("../database/location");
 
 exports.get_locations = async (req, res) => {
-    res.status(351).send("hallo");
+    await getLocations().then(result => {
+        let locations = [];
+        result.forEach((item) => {
+            var location_item = {
+                "id": item.id,
+                "name": item.name,
+                "description": item.description,
+                "latitude": item.latitude,
+                "longitude": item.longitude,
+                "category": {
+                    "id": item.categoryid,
+                    "name": item.categoryname
+                },
+                "address": {
+                    "country": {
+                        "name": item.countryname
+                    },
+                    "city": {
+                        "zipcode": item.zipcode,
+                        "name": item.cityname
+                    },
+                    "street": item.street,
+                    "number": item.number
+                },
+                "mediaList": [],
+                "createUser": {
+                    "id": item.userid,
+                    "name": item.username
+                }
+            };
+
+            locations.push(location_item);
+        });
+        res.status(200).send(locations);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+
     // await getLocations().then(result => {
     // }).catch(error => {
     // });
