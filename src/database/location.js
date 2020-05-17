@@ -114,7 +114,6 @@ async function deleteLocation(id) {
     });
 }
 
-
 const insertAddressAndLocation = (database, location, country_id) => {
 
     return new Promise((resolve, reject) => {
@@ -177,10 +176,26 @@ const insertAddressAfterCountry = (database, location, country_id) => {
 
 }
 
+async function insertMedia(locationId, mediapath) {
+    const database = await getDatabase();
+    return new Promise((resolve, reject) => {
+        let media_query = "INSERT INTO media VALUES(null, now(), '" + mediapath + "', '" + locationId + "');"
+        database.query(media_query, (err, rows) => {
+            if (!err) {
+                resolve(rows);
+            } else {
+                reject(err);
+            }
+        });
+
+    });
+}
+
 module.exports = {
     getLocations,
     getLocationById,
     insertLocation,
     updateLocation,
-    deleteLocation
+    deleteLocation,
+    insertMedia
 };

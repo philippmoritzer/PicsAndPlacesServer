@@ -4,7 +4,11 @@ const {
     getLocationById,
     deleteLocation,
     updateLocation,
+    insertMedia
 } = require("../database/location");
+
+const { upload } = require('../middleware/multerMilddeware');
+
 
 exports.get_locations = async (req, res) => {
     await getLocations().then(result => {
@@ -44,11 +48,6 @@ exports.get_locations = async (req, res) => {
     }).catch(err => {
         res.status(500).send(err);
     });
-
-    // await getLocations().then(result => {
-    // }).catch(error => {
-    // });
-
 };
 
 exports.get_location_by_id = async (req, res) => {
@@ -66,6 +65,35 @@ exports.insert_location = async (req, res) => {
         console.log(error);
     })
 };
+
+exports.insert_media = async (req, res) => {
+    await upload(req, res).then(async result => {
+        let media_response = {
+            path: req.file.path.replace("\\", "/"),
+            locationId: req.body.locationId
+        }
+        await insertMedia(media_response.locationId, media_response.path).then(result => {
+            res.status(200).json(media_response);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+    }).catch(err => {
+        res.status(500).send(err);
+    })
+
+    //}).then(async result => {
+    //console.log("hallo");
+
+    // }).catch(err => {
+    //     res.status(500).send(err);
+    // });
+    // }).catch(err => {
+    //     console.log("hallonein");
+    //     console.log(err);
+    // });
+}
+
+
 exports.update_location = async (req, res) => {
     await updateCategory(req.params.id, req.body.name).then(result => {
     }).catch(error => {

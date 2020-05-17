@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const exjwt = require('express-jwt');
 const { startDatabase } = require("./database/mysql");
 
 //routes
@@ -31,6 +30,8 @@ app.use("/auth", userRouter);
 app.use("/location", locationRouter);
 app.use("/category", categoryRouter);
 
+//Statische Bilder bereitstellen
+app.use('/media-upload', express.static('media-upload'));
 
 // starting the server
 startDatabase().then(async () => {
