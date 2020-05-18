@@ -79,18 +79,7 @@ exports.insert_media = async (req, res) => {
         });
     }).catch(err => {
         res.status(500).send(err);
-    })
-
-    //}).then(async result => {
-    //console.log("hallo");
-
-    // }).catch(err => {
-    //     res.status(500).send(err);
-    // });
-    // }).catch(err => {
-    //     console.log("hallonein");
-    //     console.log(err);
-    // });
+    });
 }
 
 
