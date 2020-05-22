@@ -72,7 +72,7 @@ async function getLocationById(id) {
 
 async function insertLocation(location) {
     const database = await getDatabase();
-
+    console.log(location);
     return new Promise((resolve, reject) => {
         //check if country already exists, if not, insert into database and retrive foreign key for city table
         let country_exists_query = "SELECT id, country.name FROM country WHERE country.name = '" + location.address.country.name + "' LIMIT 1;"
@@ -80,7 +80,7 @@ async function insertLocation(location) {
         let country_id = null;
         database.query(country_exists_query, (err, rows) => {
             if (!err) {
-                if (rows.length < 1) { //country does not exist -> insert country
+                if (rows.length < 1) { //country does not exist -> insert country, then add the address
                     database.query(country_query, (err, rows) => {
                         if (!err) {
                             country_id = rows.insertId;
