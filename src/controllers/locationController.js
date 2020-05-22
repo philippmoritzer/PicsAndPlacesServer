@@ -4,16 +4,19 @@ const {
     getLocationById,
     deleteLocation,
     updateLocation,
-    insertMedia
 } = require("../database/location");
+
+const { insertMedia
+} = require("../database/media");
 
 const { upload } = require('../middleware/multerMilddeware');
 
 
 exports.get_locations = async (req, res) => {
     await getLocations().then(result => {
+
         let locations = [];
-        result.forEach((item) => {
+        result.forEach(async (item) => {
             var location_item = {
                 "id": item.id,
                 "name": item.name,
@@ -35,7 +38,7 @@ exports.get_locations = async (req, res) => {
                     "street": item.street,
                     "number": item.number
                 },
-                "mediaList": [],
+                "mediaList": item.mediaFiles,
                 "createUser": {
                     "id": item.userid,
                     "name": item.username
@@ -44,7 +47,7 @@ exports.get_locations = async (req, res) => {
 
             locations.push(location_item);
         });
-        res.status(200).send(locations);
+        res.status(200).json(locations);
     }).catch(err => {
         res.status(500).send(err);
     });
@@ -52,8 +55,38 @@ exports.get_locations = async (req, res) => {
 
 exports.get_location_by_id = async (req, res) => {
     await getLocationById(req.params.id).then(result => {
-    }).catch(error => {
+        result = result[0];
+        var location_item = {
+            "id": result.id,
+            "name": result.name,
+            "description": result.description,
+            "latitude": result.latitude,
+            "longitude": result.longitude,
+            "category": {
+                "id": result.categoryid,
+                "name": result.categoryname
+            },
+            "address": {
+                "country": {
+                    "name": result.countryname
+                },
+                "city": {
+                    "zipcode": result.zipcode,
+                    "name": result.cityname
+                },
+                "street": result.street,
+                "number": result.number
+            },
+            "mediaList": result.mediaFiles,
+            "createUser": {
+                "id": result.userid,
+                "name": result.username
+            }
+        };
 
+        res.status(200).json(location_item);
+    }).catch(error => {
+        res.status(200).send(error);
     });
 
 };
@@ -63,7 +96,7 @@ exports.insert_location = async (req, res) => {
         res.status(200).send("successfully inserted location");
     }).catch(error => {
         console.log(error);
-    })
+    });
 };
 
 exports.insert_media = async (req, res) => {
@@ -73,6 +106,8 @@ exports.insert_media = async (req, res) => {
             locationId: req.body.locationId
         }
         await insertMedia(media_response.locationId, media_response.path).then(result => {
+            media_response.id = result.insertId;
+            media_response.date = Date.now();
             res.status(200).json(media_response);
         }).catch(err => {
             res.status(500).send(err);

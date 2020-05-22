@@ -10,9 +10,7 @@ exports.get_categories = async (req, res) => {
   await getCategories().then(result => {
     res.json(result);
   }).catch(error => {
-
     res.status(401).send(error);
-
   });
 
 };
@@ -35,6 +33,7 @@ exports.insert_category = async (req, res) => {
 };
 
 exports.update_category = async (req, res) => {
+  console.log(req);
   await updateCategory(req.params.id, req.body.name).then(result => {
     res.send(result);
   }).catch(error => {

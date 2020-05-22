@@ -30,6 +30,7 @@ app.use("/auth", userRouter);
 app.use("/location", locationRouter);
 app.use("/category", categoryRouter);
 
+
 //Statische Bilder bereitstellen
 app.use('/media-upload', express.static('media-upload'));
 

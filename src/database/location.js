@@ -1,4 +1,5 @@
 const { getDatabase } = require("./mysql");
+const { getMediaFilesForLocation } = require("./media");
 
 async function getLocations() {
     const database = await getDatabase();
@@ -11,12 +12,22 @@ async function getLocations() {
         + " INNER JOIN country ON city.country_id = country.id";
     console.log(query);
     return new Promise((resolve, reject) => {
-
         database.query(
             query,
-            async (err, rows, fields) => {
+            async (err, rows) => {
                 if (!err) {
-                    resolve(rows);
+                    rows.forEach(async (item, index, rows) => {
+                        await getMediaFilesForLocation(item.id).then(result => {
+                            item.mediaFiles = result;
+                            if (index === rows.length - 1) {
+                                resolve(rows);
+                            }
+
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    });
+
                 } else {
                     console.log("Error while performing Query." + err.message);
                     reject(err);
@@ -26,14 +37,30 @@ async function getLocations() {
     });
 }
 
+
+
+
 async function getLocationById(id) {
     const database = await getDatabase();
+    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, address.street,"
+        + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
+        + " FROM location INNER JOIN category ON category.id = location.category_id"
+        + " INNER JOIN user ON user.id = location.create_user_id"
+        + " INNER JOIN address ON location.address_id = address.id"
+        + " INNER JOIN city ON address.zipcode = city.zipcode AND address.country_id = city.country_id"
+        + " INNER JOIN country ON city.country_id = country.id WHERE location.id = '" + id + "';";
     return new Promise((resolve, reject) => {
         database.query(
-            "SELECT id, name FROM category WHERE id = " + id + ";",
+            query,
             async (err, rows, fields) => {
                 if (!err) {
-                    resolve(rows);
+                    await getMediaFilesForLocation(rows[0].id).then(result => {
+                        rows[0].mediaFiles = result;
+                        resolve(rows);
+                    }).catch(err => {
+                        reject(err);
+                    });
+
                 } else {
                     console.log("Error while performing Query." + err.message);
                     reject(err);
@@ -59,7 +86,6 @@ async function insertLocation(location) {
                             country_id = rows.insertId;
                             insertAddressAfterCountry(database, location, country_id).then(result => resolve(result)).catch(err => reject(err));
                         } else {
-                            console.log("ERRROOOOORR");
                             reject(err);
                         }
                     });
@@ -176,20 +202,7 @@ const insertAddressAfterCountry = (database, location, country_id) => {
 
 }
 
-async function insertMedia(locationId, mediapath) {
-    const database = await getDatabase();
-    return new Promise((resolve, reject) => {
-        let media_query = "INSERT INTO media VALUES(null, now(), '" + mediapath + "', '" + locationId + "');"
-        database.query(media_query, (err, rows) => {
-            if (!err) {
-                resolve(rows);
-            } else {
-                reject(err);
-            }
-        });
 
-    });
-}
 
 module.exports = {
     getLocations,
@@ -197,5 +210,4 @@ module.exports = {
     insertLocation,
     updateLocation,
     deleteLocation,
-    insertMedia
 };
