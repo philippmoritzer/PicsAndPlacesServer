@@ -8,6 +8,7 @@ router.get("/:id", location_controller.get_location_by_id);
 router.post("/", location_controller.insert_location);
 router.post("/media", location_controller.insert_media);
 router.put("/:id", location_controller.update_location);
+router.delete("/media/:id", location_controller.delete_media);
 router.delete("/:id", location_controller.delete_location);
 
 

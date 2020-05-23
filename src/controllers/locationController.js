@@ -6,7 +6,7 @@ const {
     updateLocation,
 } = require("../database/location");
 
-const { insertMedia
+const { insertMedia, deleteMedia
 } = require("../database/media");
 
 const { upload } = require('../middleware/multerMilddeware');
@@ -132,3 +132,11 @@ exports.delete_location = async (req, res) => {
     }).catch(error => {
     })
 };
+
+exports.delete_media = async (req, res) => {
+    await deleteMedia(req.params.id).then(result => {
+        res.status(200).json(result);
+    }).catch(error => {
+        res.status(500).json(error);
+    });
+}
