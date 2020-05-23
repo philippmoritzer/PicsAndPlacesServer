@@ -17,6 +17,22 @@ async function insertMedia(locationId, mediapath) {
     });
 }
 
+async function deleteMedia(mediaId) {
+    const database = await getDatabase();
+    return new Promise((resolve, reject) => {
+        let delete_media_query = "DELETE FROM media WHERE id = '" + mediaId + "';"
+        database.query(delete_media_query, (err, rows) => {
+            console.log(rows);
+            if (!err) {
+                resolve(rows);
+            } else {
+                reject(err);
+            }
+        });
+    });
+
+}
+
 async function getMediaFilesForLocation(locationId) {
     const database = await getDatabase();
 
@@ -35,5 +51,7 @@ async function getMediaFilesForLocation(locationId) {
 
 module.exports = {
     insertMedia,
-    getMediaFilesForLocation
+    deleteMedia,
+    getMediaFilesForLocation,
+
 }

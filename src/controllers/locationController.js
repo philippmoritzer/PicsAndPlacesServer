@@ -92,7 +92,7 @@ exports.get_location_by_id = async (req, res) => {
 };
 
 exports.insert_location = async (req, res) => {
-    await insertLocation(req.body.location).then(result => {
+    await insertLocation(req.body).then(result => {
         res.status(200).json(result);
     }).catch(error => {
         res.status(500).json(error);
@@ -110,17 +110,19 @@ exports.insert_media = async (req, res) => {
             media_response.date = Date.now();
             res.status(200).json(media_response);
         }).catch(err => {
-            res.status(500).send(err);
+            res.status(500).json(err);
         });
     }).catch(err => {
-        res.status(500).send(err);
+        res.status(500).json(err);
     });
 }
 
 
 exports.update_location = async (req, res) => {
-    await updateCategory(req.params.id, req.body.name).then(result => {
+    await updateLocation(req.body).then(result => {
+        res.status(200).json(result);
     }).catch(error => {
+        res.status(500).json(error);
     })
 
 };

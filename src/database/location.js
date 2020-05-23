@@ -1,5 +1,5 @@
 const { getDatabase } = require("./mysql");
-const { getMediaFilesForLocation } = require("./media");
+const { getMediaFilesForLocation, deleteMedia } = require("./media");
 
 async function getLocations() {
     const database = await getDatabase();
@@ -16,20 +16,27 @@ async function getLocations() {
             query,
             async (err, rows) => {
                 if (!err) {
-                    rows.forEach(async (item, index, rows) => {
-                        await getMediaFilesForLocation(item.id).then(result => {
-                            item.mediaFiles = result;
-                            if (index === rows.length - 1) {
-                                resolve(rows);
-                            }
-
-                        }).catch(err => {
+                    if (rows.length === 0) {
+                        if (!err) {
+                            resolve(rows);
+                        } else {
                             reject(err);
+                        }
+                    } else {
+                        rows.forEach(async (item, index, rows) => {
+                            await getMediaFilesForLocation(item.id).then(result => {
+                                item.mediaFiles = result;
+                                if (index === rows.length - 1) {
+                                    resolve(rows);
+                                }
+
+                            }).catch(err => {
+                                reject(err);
+                            });
                         });
-                    });
+                    }
 
                 } else {
-                    console.log("Error while performing Query." + err.message);
                     reject(err);
                 }
             }
@@ -102,22 +109,28 @@ async function insertLocation(location) {
 
 }
 
-async function updateLocation(id, name) {
+async function updateLocation(location) {
     const database = await getDatabase();
-
+    console.log("thisone")
+    console.log(location);
     return new Promise((resolve, reject) => {
+        let query = "UPDATE location SET name = '" + location.name + "',"
+            + "description = '" + location.description + "',"
+            + "category_id = '" + location.category.id + "',"
+            + "update_time = now()"
+            + "WHERE id = '" + location.id + "';"
+
         database.query(
-            "UPDATE category SET name = '" +
-            name +
-            "' WHERE id = '" +
-            id +
-            "';",
+            query,
             (err, rows, fields) => {
+
                 if (!err) {
                     resolve(rows);
                 } else {
+                    console.log(err);
                     reject(err);
                 }
+
             }
         );
     });
