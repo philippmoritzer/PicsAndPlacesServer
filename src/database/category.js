@@ -4,7 +4,7 @@ async function getCategories() {
   const database = await getDatabase();
   return new Promise((resolve, reject) => {
     database.query(
-      "SELECT id, name FROM category;",
+      "SELECT id, name, hexcolor FROM category;",
       async (err, rows, fields) => {
         if (!err) {
           resolve(rows);

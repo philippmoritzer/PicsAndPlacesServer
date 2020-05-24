@@ -1,16 +1,30 @@
 const { getDatabase } = require("./mysql");
 const { getMediaFilesForLocation, deleteMedia } = require("./media");
 
-async function getLocations() {
+async function getLocations(categoryFilter) {
     const database = await getDatabase();
-    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, address.street,"
+    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
         + " FROM location INNER JOIN category ON category.id = location.category_id"
         + " INNER JOIN user ON user.id = location.create_user_id"
         + " INNER JOIN address ON location.address_id = address.id"
         + " INNER JOIN city ON address.zipcode = city.zipcode AND address.country_id = city.country_id"
         + " INNER JOIN country ON city.country_id = country.id";
-    console.log(query);
+    if (categoryFilter) { // categoryFilter can be ?category=1,11 OR category = 1 OR category=
+        if (categoryFilter.includes(",")) {
+            const filterArr = categoryFilter.split(",")
+            filterArr.forEach((categoryId, index, array) => {
+                if (index === 0) {
+                    query = query + " WHERE category.id = '" + categoryId + "'"
+                } else {
+                    query = query + " OR category.id = '" + categoryId + "'";
+                }
+
+            });
+        } else {
+            query = query + " WHERE category.id = '" + categoryFilter + "'"
+        }
+    }
     return new Promise((resolve, reject) => {
         database.query(
             query,

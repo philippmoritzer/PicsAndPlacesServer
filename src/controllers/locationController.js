@@ -13,7 +13,9 @@ const { upload } = require('../middleware/multerMilddeware');
 
 
 exports.get_locations = async (req, res) => {
-    await getLocations().then(result => {
+
+
+    await getLocations(req.query.category).then(result => {
 
         let locations = [];
         result.forEach(async (item) => {
@@ -25,7 +27,8 @@ exports.get_locations = async (req, res) => {
                 "longitude": item.longitude,
                 "category": {
                     "id": item.categoryid,
-                    "name": item.categoryname
+                    "name": item.categoryname,
+                    "hexcolor": item.hexcolor
                 },
                 "address": {
                     "country": {
