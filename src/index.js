@@ -5,10 +5,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const { startDatabase } = require("./database/mysql");
 
-//routes
-var categoryRouter = require("./routes/categoryRouter");
-var locationRouter = require("./routes/locationRouter");
-var userRouter = require("./routes/userRouter");
+;
 
 // defining the Express app
 const app = express();
@@ -17,6 +14,9 @@ const app = express();
 app.use(helmet());
 
 // using bodyParser to parse JSON bodies into JS objects
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(bodyParser.json());
 
 // enabling CORS for all requests
@@ -25,11 +25,9 @@ app.use(cors());
 // adding morgan to log HTTP requests
 app.use(morgan("combined"));
 
-//register routes
-app.use("/auth", userRouter);
-app.use("/location", locationRouter);
-app.use("/category", categoryRouter);
-
+//register Root-Route
+const apiRouter = require('./routes/indexRouter');
+app.use('/api', apiRouter);
 
 //Statische Bilder bereitstellen
 app.use('/media-upload', express.static('media-upload'));

@@ -63,7 +63,8 @@ async function getLocations(categoryFilter) {
 
 async function getLocationById(id) {
     const database = await getDatabase();
-    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, address.street,"
+    console.log(id);
+    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
         + " FROM location INNER JOIN category ON category.id = location.category_id"
         + " INNER JOIN user ON user.id = location.create_user_id"

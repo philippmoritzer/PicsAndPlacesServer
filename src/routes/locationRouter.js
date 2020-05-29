@@ -1,15 +1,25 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const { jwtMW } = require("../middleware/jwtMiddleware");
 
-var location_controller = require("../controllers/locationController");
+//define subroutes
+const rating_router = require('./ratingRouter');
+const media_router = require('./mediaRouter');
 
+//get controller functions
+const location_controller = require("../controllers/locationController");
+
+//register request types
 router.get("/", location_controller.get_locations);
-router.get("/:id", location_controller.get_location_by_id);
+router.get("/:locationId", location_controller.get_location_by_id);
 router.post("/", location_controller.insert_location);
-router.post("/media", location_controller.insert_media);
-router.put("/:id", location_controller.update_location);
-router.delete("/media/:id", location_controller.delete_media);
-router.delete("/:id", location_controller.delete_location);
+router.put("/:locationId", location_controller.update_location);
+router.delete("/:locationId", location_controller.delete_location);
+
+//register subroutes
+router.use('/:locationId', media_router);
+
+router.use('/:locationId', rating_router);
 
 
 module.exports = router;
