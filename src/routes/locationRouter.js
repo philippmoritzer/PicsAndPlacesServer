@@ -18,7 +18,6 @@ router.delete("/:locationId", location_controller.delete_location);
 
 //register subroutes
 router.use('/:locationId', media_router);
-
 router.use('/:locationId', rating_router);
 
 

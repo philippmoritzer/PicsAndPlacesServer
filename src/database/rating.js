@@ -1,0 +1,26 @@
+const { getDatabase } = require("./mysql");
+
+
+async function getRatingsForLocation(locationId) {
+    console.log(locationId);
+    const database = await getDatabase();
+    let query = "SELECT rating.id, rating.value, rating.comment, rating.location_id, rating.created_time, rating.update_time, user.name, user.id as userId"
+        + " FROM rating INNER JOIN user ON user.id = rating.user_id"
+        + " WHERE rating.location_id = '" + locationId + "'";
+
+    return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
+            console.log(rows);
+            if (!err) {
+                resolve(rows);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+
+module.exports = {
+    getRatingsForLocation
+}

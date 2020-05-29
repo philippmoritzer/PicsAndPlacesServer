@@ -6,20 +6,21 @@ const { upload } = require('../middleware/multerMilddeware');
 
 
 exports.insert_media = async (req, res) => {
+    const locationId = req.params.locationId
     await upload(req, res).then(async result => {
         let media_response = {
             path: req.file.path.replace("\\", "/"),
-            locationId: req.body.locationId
+            locationId: locationId
         }
         await insertMedia(media_response.locationId, media_response.path).then(result => {
             media_response.id = result.insertId;
             media_response.date = Date.now();
             res.status(200).json(media_response);
         }).catch(err => {
-            res.status(500).json(err);
+            res.status(500).send(err);
         });
     }).catch(err => {
-        res.status(500).json(err);
+        res.status(500).send(err);
     });
 }
 
