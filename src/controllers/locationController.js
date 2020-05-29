@@ -45,7 +45,9 @@ exports.get_locations = async (req, res) => {
                 "createUser": {
                     "id": item.userid,
                     "name": item.username
-                }
+                },
+                "createdTime": item.created_time,
+                "updateTime": item.update_ime
             };
 
             locations.push(location_item);
@@ -58,6 +60,7 @@ exports.get_locations = async (req, res) => {
 
 exports.get_location_by_id = async (req, res) => {
     await getLocationById(req.params.id).then(result => {
+        console.log(result[0]);
         result = result[0];
         var location_item = {
             "id": result.id,
@@ -84,7 +87,9 @@ exports.get_location_by_id = async (req, res) => {
             "createUser": {
                 "id": result.userid,
                 "name": result.username
-            }
+            },
+            "createdTime": result.created_time,
+            "updateTime": result.update_time
         };
 
         res.status(200).json(location_item);
