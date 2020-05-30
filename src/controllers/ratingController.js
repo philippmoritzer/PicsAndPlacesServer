@@ -1,4 +1,4 @@
-const { getRatingsForLocation, insertRating
+const { getRatingById, getRatingsForLocation, insertRating
 } = require("../database/rating");
 
 exports.get_ratings_for_location = async (req, res) => {
@@ -27,8 +27,26 @@ exports.get_ratings_for_location = async (req, res) => {
 }
 
 exports.insert_rating = async (req, res) => {
-    await insertRating(req.params.locationId, req.body).then(result => {
-        res.status(200).send(result);
+    await insertRating(req.params.locationId, req.body).then(async result => {
+        await getRatingById(result.insertId).then(result => {
+            result = result[0];
+            let rating = {
+                "id": result.id,
+                "value": result.value,
+                "comment": result.comment,
+                "createdUser": {
+                    "id": result.userId,
+                    "name": result.name
+                },
+                "createdTime": result.created_time,
+                "updateTime": result.update_time
+            };
+
+            res.status(200).json(rating);
+        }).catch(err => {
+            res.status(500).send(err);
+        });
+
     }).catch(err => {
         res.status(500).send(err);
     });
