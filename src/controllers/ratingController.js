@@ -1,4 +1,4 @@
-const { getRatingsForLocation
+const { getRatingsForLocation, insertRating
 } = require("../database/rating");
 
 exports.get_ratings_for_location = async (req, res) => {
@@ -24,4 +24,20 @@ exports.get_ratings_for_location = async (req, res) => {
     }).catch(err => {
         res.status(500).json(err);
     });
+}
+
+exports.insert_rating = async (req, res) => {
+    await insertRating(req.params.locationId, req.body).then(result => {
+        res.status(200).send(result);
+    }).catch(err => {
+        res.status(500).send(err);
+    });
+}
+
+exports.edit_rating = async (req, res) => {
+
+}
+
+exports.delete_rating = async (req, res) => {
+
 }
