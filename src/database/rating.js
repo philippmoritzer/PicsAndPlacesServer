@@ -19,7 +19,6 @@ async function getRatingById(ratingId) {
 }
 
 async function getRatingsForLocation(locationId) {
-    console.log(locationId);
     const database = await getDatabase();
     let query = "SELECT rating.id, rating.value, rating.comment, rating.location_id, rating.created_time, rating.update_time, user.name, user.id as userId"
         + " FROM rating INNER JOIN user ON user.id = rating.user_id"
@@ -28,6 +27,20 @@ async function getRatingsForLocation(locationId) {
     return new Promise((resolve, reject) => {
         database.query(query, (err, rows) => {
             console.log(rows);
+            if (!err) {
+                resolve(rows);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+async function getAverageRatingValue(locationId) {
+    const database = await getDatabase();
+    let query = "SELECT AVG(Value) as avgRatingValue FROM rating where location_id = '" + locationId + "';"
+    return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
             if (!err) {
                 resolve(rows);
             } else {
@@ -53,9 +66,28 @@ async function insertRating(locationId, rating) {
     });
 }
 
+async function editRating(locationId, rating) {
+    const database = await getDatabase();
+
+    return new Promise((resolve, reject) => {
+
+    })
+}
+
+async function deleteRating(locationId, ratingId) {
+    const database = await getDatabase();
+
+    return new Promise((resolve, reject) => {
+
+    });
+}
+
 
 module.exports = {
     getRatingById,
     getRatingsForLocation,
-    insertRating
+    getAverageRatingValue,
+    insertRating,
+    editRating,
+    deleteRating
 }

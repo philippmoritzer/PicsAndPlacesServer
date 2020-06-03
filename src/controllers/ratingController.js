@@ -1,4 +1,4 @@
-const { getRatingById, getRatingsForLocation, insertRating
+const { getRatingById, getRatingsForLocation, getAverageRatingValue, insertRating
 } = require("../database/rating");
 
 exports.get_ratings_for_location = async (req, res) => {
@@ -23,6 +23,15 @@ exports.get_ratings_for_location = async (req, res) => {
         res.status(200).json(ratings);
     }).catch(err => {
         res.status(500).json(err);
+    });
+}
+
+exports.get_average_rating_value = async (req, res) => {
+    await getAverageRatingValue(req.params.locationId).then(result => {
+        result = result[0];
+        res.status(200).json(result);
+    }).catch(err => {
+        res.status(500).json({ error: err });
     });
 }
 
@@ -53,9 +62,9 @@ exports.insert_rating = async (req, res) => {
 }
 
 exports.edit_rating = async (req, res) => {
-
+    res.status(501).send();
 }
 
 exports.delete_rating = async (req, res) => {
-
+    res.status(501).send();
 }

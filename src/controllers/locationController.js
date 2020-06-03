@@ -111,8 +111,11 @@ exports.update_location = async (req, res) => {
 };
 
 exports.delete_location = async (req, res) => {
-    await deleteCategory(req.params.locationId).then(result => {
+    console.log("hallo");
+    await deleteLocation(req.params.locationId).then(result => {
+        res.status(200).json(result);
     }).catch(error => {
+        res.status(500).json(error);
     })
 };
 
