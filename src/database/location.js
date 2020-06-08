@@ -92,6 +92,41 @@ async function getLocationById(id) {
     });
 }
 
+async function getLocationByName(name) {
+    const database = await getDatabase();
+    console.log(name);
+    let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
+        + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
+        + " FROM location INNER JOIN category ON category.id = location.category_id"
+        + " INNER JOIN user ON user.id = location.create_user_id"
+        + " INNER JOIN address ON location.address_id = address.id"
+        + " INNER JOIN city ON address.zipcode = city.zipcode AND address.country_id = city.country_id"
+        + " INNER JOIN country ON city.country_id = country.id WHERE location.name LIKE '" + name + "%';";
+    return new Promise((resolve, reject) => {
+        database.query(
+            query,
+            async (err, rows, fields) => {
+                if (!err) {
+                    rows.forEach(async (item, index, rows) => {
+                        await getMediaFilesForLocation(item.id).then(result => {
+                            item.mediaFiles = result;
+                            if (index == rows.length - 1) {
+                                resolve(rows);
+                            }
+
+                        }).catch(err => {
+                            reject(err);
+                        });
+                    })
+                } else {
+                    console.log("Error while performing Query." + err.message);
+                    reject(err);
+                }
+            }
+        );
+    });
+}
+
 async function insertLocation(location) {
     const database = await getDatabase();
     console.log(location);
@@ -235,6 +270,7 @@ const insertAddressAfterCountry = (database, location, country_id) => {
 module.exports = {
     getLocations,
     getLocationById,
+    getLocationByName,
     insertLocation,
     updateLocation,
     deleteLocation,
