@@ -188,18 +188,48 @@ async function updateLocation(location) {
 
 async function deleteLocation(id) {
     const database = await getDatabase();
-
+    let addressIdQuery = "SELECT address_id FROM location WHERE id = '" + id + "' LIMIT 1;"
+    let addressDeleteQuery = "DELETE FROM address ";
+    let mediaDeleteQuery = "DELETE FROM media WHERE location_id ='" + id + "';";
+    let locationToureDeleteQuery = "DELETE FROM location_tour WHERE location_id = '" + id + "';";
+    let locationDeleteQuery = "DELETE FROM location WHERE id = '" + id + "';"
     return new Promise((resolve, reject) => {
-        database.query(
-            "DELETE FROM location WHERE id = '" + id + "';",
-            (err, rows, fields) => {
-                if (!err) {
-                    resolve(rows);
-                } else {
-                    reject(err);
-                }
+        database.query(addressIdQuery, (err, rows) => {
+            if (!err) {
+                addressDeleteQuery = addressDeleteQuery + "WHERE id = '" + rows[0].address_id + "';"
+                console.log(rows);
+                database.query(
+                    locationDeleteQuery,
+                    (err, rows) => {
+                        if (!err) {
+                            database.query(mediaDeleteQuery, (err, rows) => {
+                                if (!err) {
+                                    database.query(locationToureDeleteQuery, (err, rows) => {
+                                        if (!err) {
+                                            database.query(addressDeleteQuery, (err, rows) => {
+                                                if (!err) {
+                                                    resolve(rows);
+                                                } else {
+                                                    reject(err);
+                                                }
+                                            });
+                                        } else {
+                                            reject(err);
+                                        }
+                                    });
+                                } else {
+                                    reject(err);
+                                }
+                            });
+                        } else {
+                            reject(err);
+                        }
+                    }
+                );
+            } else {
+                reject(err);
             }
-        );
+        });
     });
 }
 
