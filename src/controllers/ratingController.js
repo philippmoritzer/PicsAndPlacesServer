@@ -1,4 +1,9 @@
-const { getRatingById, getRatingsForLocation, getAverageRatingValue, insertRating
+const { getRatingById,
+    getRatingsForLocation,
+    getAverageRatingValue,
+    insertRating,
+    editRating,
+    deleteRating
 } = require("../database/rating");
 
 exports.get_ratings_for_location = async (req, res) => {
@@ -53,18 +58,44 @@ exports.insert_rating = async (req, res) => {
 
             res.status(200).json(rating);
         }).catch(err => {
-            res.status(500).send(err);
+            res.status(500).json(err);
         });
 
     }).catch(err => {
-        res.status(500).send(err);
+        res.status(500).json(err);
     });
 }
 
 exports.edit_rating = async (req, res) => {
-    res.status(501).send();
+    await editRating(req.params.ratingId, req.body).then(async result => {
+        await getRatingById(req.params.ratingId).then(result => {
+            result = result[0];
+            let rating = {
+                "id": result.id,
+                "value": result.value,
+                "comment": result.comment,
+                "createdUser": {
+                    "id": result.userId,
+                    "name": result.name
+                },
+                "createdTime": result.created_time,
+                "updateTime": result.update_time
+            };
+
+            res.status(200).json(rating);
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    }).catch(err => {
+        res.status(500).json(err);
+    })
 }
 
 exports.delete_rating = async (req, res) => {
-    res.status(501).send();
+    await deleteRating(req.params.ratingId).then(result => {
+        res.status(200).json(result);
+    }).catch(err => {
+        res.status(200).json(err);
+    });
 }
