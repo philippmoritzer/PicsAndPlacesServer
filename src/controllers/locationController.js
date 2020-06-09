@@ -54,7 +54,6 @@ exports.get_locations = async (req, res) => {
 
 exports.get_location_by_id = async (req, res) => {
     await getLocationById(req.params.locationId).then(result => {
-        console.log(result[0]);
         result = result[0];
         var location_item = {
             "id": result.id,
@@ -97,7 +96,6 @@ exports.get_location_by_id = async (req, res) => {
 exports.get_location_by_name = async (req, res) => {
     console.log(req.params);
     await getLocationByName(req.params.locationName).then(result => {
-        console.log(result[0]);
         let locations = [];
         result.forEach(async (item) => {
             var location_item = {
@@ -158,7 +156,6 @@ exports.update_location = async (req, res) => {
 };
 
 exports.delete_location = async (req, res) => {
-    console.log("hallo");
     await deleteLocation(req.params.locationId).then(result => {
         res.status(200).json(result);
     }).catch(error => {

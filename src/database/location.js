@@ -63,7 +63,6 @@ async function getLocations(categoryFilter) {
 
 async function getLocationById(id) {
     const database = await getDatabase();
-    console.log(id);
     let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
         + " FROM location INNER JOIN category ON category.id = location.category_id"
@@ -84,7 +83,6 @@ async function getLocationById(id) {
                     });
 
                 } else {
-                    console.log("Error while performing Query." + err.message);
                     reject(err);
                 }
             }
@@ -94,7 +92,6 @@ async function getLocationById(id) {
 
 async function getLocationByName(name) {
     const database = await getDatabase();
-    console.log(name);
     let query = "SELECT location.id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, created_time, update_time, user.name AS username, user.id AS userid"
         + " FROM location INNER JOIN category ON category.id = location.category_id"
@@ -119,7 +116,6 @@ async function getLocationByName(name) {
                         });
                     })
                 } else {
-                    console.log("Error while performing Query." + err.message);
                     reject(err);
                 }
             }
@@ -129,7 +125,6 @@ async function getLocationByName(name) {
 
 async function insertLocation(location) {
     const database = await getDatabase();
-    console.log(location);
     return new Promise((resolve, reject) => {
         //check if country already exists, if not, insert into database and retrive foreign key for city table
         let country_exists_query = "SELECT id, country.name FROM country WHERE country.name = '" + location.address.country.name + "' LIMIT 1;"
@@ -161,8 +156,7 @@ async function insertLocation(location) {
 
 async function updateLocation(location) {
     const database = await getDatabase();
-    console.log("thisone")
-    console.log(location);
+
     return new Promise((resolve, reject) => {
         let query = "UPDATE location SET name = '" + location.name + "',"
             + "description = '" + location.description + "',"
@@ -177,7 +171,6 @@ async function updateLocation(location) {
                 if (!err) {
                     resolve(rows);
                 } else {
-                    console.log(err);
                     reject(err);
                 }
 
@@ -197,7 +190,6 @@ async function deleteLocation(id) {
         database.query(addressIdQuery, (err, rows) => {
             if (!err) {
                 addressDeleteQuery = addressDeleteQuery + "WHERE id = '" + rows[0].address_id + "';"
-                console.log(rows);
                 database.query(
                     locationDeleteQuery,
                     (err, rows) => {
