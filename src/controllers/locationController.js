@@ -41,7 +41,7 @@ exports.get_locations = async (req, res) => {
                     "name": item.username
                 },
                 "createdTime": item.created_time,
-                "updateTime": item.update_ime
+                "updateTime": item.update_time
             };
 
             locations.push(location_item);
