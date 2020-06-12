@@ -81,17 +81,89 @@ async function getTourById(tourId) {
 
 async function insertTour(tour) {
     const database = await getDatabase();
+    let query = "INSERT INTO tour VALUES(null, '" + tour.name + "', '" + tour.description + "', '" + tour.length + "', '" + tour.category.id + "', now(), null);"
 
     return new Promise((resolve, reject) => {
-
+        database.query(query, (err, rows) => {
+            if (!err) {
+                tour.locations.forEach((item, index, array) => {
+                    database.query(`INSERT INTO location_tour VALUES(${item}, ${rows.insertId});`, (err, rows) => {
+                        if (!err) {
+                            resolve(rows);
+                        } else {
+                            reject(err);
+                        }
+                    });
+                });
+            } else {
+                reject(err);
+            }
+        });
     });
 }
 
 async function editTour(tourId, tour) {
     const database = await getDatabase();
+    const removedLocations = tour.removedLocations;
+    const addedLocations = tour.addedLocations;
+
+    let query = "UPDATE tour SET name = '" + tour.name + "', description = '" + tour.description + "', length = '" + tour.length + "', category_id = '" + tour.category.id + "' WHERE id = '" + tourId + "';"
+    let deleteLocationsQuery = "DELETE FROM location_tour WHERE tour_id = '" + tourId + "' AND location_id = ";
+    let insertLocationsQuery = "INSERT INTO location_tour VALUES('";
 
     return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
+            if (!err) {
+                console.log(addedLocations.length);
+                if (addedLocations.length <= 0 && removedLocations <= 0) {
+                    resolve(rows);
+                }
+                if (!addedLocations.length <= 0) {
+                    addedLocations.forEach((item, index, array) => {
+                        database.query(insertLocationsQuery + item + "', '" + tourId + "');", (err, rows) => {
+                            if (!err) {
+                                if (index === array.length - 1) {
 
+                                    if (removedLocations.length > 0) {
+                                        removedLocations.forEach((item, index, array) => {
+                                            database.query(deleteLocationsQuery + item, (err, rows) => {
+                                                if (!err) {
+                                                    if (index === array.length - 1) {
+                                                        resolve(rows);
+                                                    }
+                                                } else {
+                                                    resolve(rows);
+                                                }
+                                            });
+
+                                        });
+                                    } else {
+                                        resolve(rows);
+                                    }
+                                }
+                            } else {
+                                reject(err);
+                            }
+                        })
+                    });
+                } else {
+                    console.log("I'M HERE");
+                    removedLocations.forEach((item, index, array) => {
+                        database.query(deleteLocationsQuery + item, (err, rows) => {
+                            if (!err) {
+                                if (index === array.length - 1) {
+                                    resolve(rows);
+                                }
+                            } else {
+                                resolve(rows);
+                            }
+                        });
+                    });
+                }
+            } else {
+                reject(err);
+            }
+        });
     });
 }
 

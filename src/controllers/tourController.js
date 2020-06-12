@@ -123,11 +123,20 @@ exports.get_tour_by_id = async (req, res) => {
 }
 
 exports.insert_tour = async (req, res) => {
-    res.status(200).json({});
+    await insertTour(req.body).then(result => {
+        res.status(200).json(result);
+    }).catch(err => {
+        res.status(500).json(err);
+    });
 }
 
 exports.edit_tour = async (req, res) => {
-    res.status(200).json({});
+    await editTour(req.params.tourId, req.body).then(result => {
+        res.status(200).json(result);
+    }).catch(err => {
+        res.status(500).json(err);
+    })
+
 }
 
 exports.delete_tour = async (req, res) => {
