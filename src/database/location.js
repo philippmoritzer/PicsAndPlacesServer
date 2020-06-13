@@ -185,22 +185,29 @@ async function deleteLocation(id) {
     let addressDeleteQuery = "DELETE FROM address ";
     let mediaDeleteQuery = "DELETE FROM media WHERE location_id ='" + id + "';";
     let locationToureDeleteQuery = "DELETE FROM location_tour WHERE location_id = '" + id + "';";
-    let locationDeleteQuery = "DELETE FROM location WHERE id = '" + id + "';"
+    let locationDeleteQuery = "DELETE FROM location WHERE id = '" + id + "';";
+    let ratingDeleteQuery = "DELETE FROM rating where location_id = '" + id + "';";
     return new Promise((resolve, reject) => {
         database.query(addressIdQuery, (err, rows) => {
             if (!err) {
                 addressDeleteQuery = addressDeleteQuery + "WHERE id = '" + rows[0].address_id + "';"
                 database.query(
-                    locationDeleteQuery,
+                    ratingDeleteQuery,
                     (err, rows) => {
                         if (!err) {
                             database.query(mediaDeleteQuery, (err, rows) => {
                                 if (!err) {
                                     database.query(locationToureDeleteQuery, (err, rows) => {
                                         if (!err) {
-                                            database.query(addressDeleteQuery, (err, rows) => {
+                                            database.query(locationDeleteQuery, (err, rows) => {
                                                 if (!err) {
-                                                    resolve(rows);
+                                                    database.query(addressDeleteQuery, (err, rows) => {
+                                                        if (!err) {
+                                                            resolve(rows);
+                                                        } else {
+                                                            reject(err);
+                                                        }
+                                                    });
                                                 } else {
                                                     reject(err);
                                                 }

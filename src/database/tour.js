@@ -84,12 +84,12 @@ async function insertTour(tour) {
     let query = "INSERT INTO tour VALUES(null, '" + tour.name + "', '" + tour.description + "', '" + tour.length + "', '" + tour.category.id + "', now(), null);"
 
     return new Promise((resolve, reject) => {
-        database.query(query, (err, rows) => {
+        database.query(query, (err, resRows) => {
             if (!err) {
                 tour.locations.forEach((item, index, array) => {
-                    database.query(`INSERT INTO location_tour VALUES(${item}, ${rows.insertId});`, (err, rows) => {
+                    database.query(`INSERT INTO location_tour VALUES(${item}, ${resRows.insertId});`, (err, rows) => {
                         if (!err) {
-                            resolve(rows);
+                            resolve(resRows);
                         } else {
                             reject(err);
                         }
@@ -112,11 +112,12 @@ async function editTour(tourId, tour) {
     let insertLocationsQuery = "INSERT INTO location_tour VALUES('";
 
     return new Promise((resolve, reject) => {
+
         database.query(query, (err, rows) => {
             if (!err) {
                 console.log(addedLocations.length);
                 if (addedLocations.length <= 0 && removedLocations <= 0) {
-                    resolve(rows);
+                    resolve(tourId);
                 }
                 if (!addedLocations.length <= 0) {
                     addedLocations.forEach((item, index, array) => {
@@ -129,16 +130,16 @@ async function editTour(tourId, tour) {
                                             database.query(deleteLocationsQuery + item, (err, rows) => {
                                                 if (!err) {
                                                     if (index === array.length - 1) {
-                                                        resolve(rows);
+                                                        resolve(tourId);
                                                     }
                                                 } else {
-                                                    resolve(rows);
+                                                    resolve(tourId);
                                                 }
                                             });
 
                                         });
                                     } else {
-                                        resolve(rows);
+                                        resolve(tourId);
                                     }
                                 }
                             } else {
@@ -147,15 +148,14 @@ async function editTour(tourId, tour) {
                         })
                     });
                 } else {
-                    console.log("I'M HERE");
                     removedLocations.forEach((item, index, array) => {
                         database.query(deleteLocationsQuery + item, (err, rows) => {
                             if (!err) {
                                 if (index === array.length - 1) {
-                                    resolve(rows);
+                                    resolve(tourId);
                                 }
                             } else {
-                                resolve(rows);
+                                resolve(tourId);
                             }
                         });
                     });
