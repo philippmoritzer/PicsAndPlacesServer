@@ -12,6 +12,7 @@ const location_controller = require("../controllers/locationController");
 //register request types
 router.get("/", location_controller.get_locations);
 router.get("/:locationId", location_controller.get_location_by_id);
+router.get("/user/:userId", location_controller.get_location_by_user_id);
 router.get("/search/:locationName", location_controller.get_location_by_name);
 router.post("/", location_controller.insert_location);
 router.put("/:locationId", location_controller.update_location);
