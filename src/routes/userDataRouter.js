@@ -1,10 +1,8 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 const user_controller = require("../controllers/userController");
 
-router.post("/", user_controller.login);
-router.post("/signup", user_controller.signup);
-
+router.get('/:userId/rating', user_controller.get_ratings_for_user);
 
 module.exports = router;
