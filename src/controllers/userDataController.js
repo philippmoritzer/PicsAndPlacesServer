@@ -7,6 +7,7 @@ const {
 } = require('../database/location');
 
 const { location } = require('../models/location');
+const { rating } = require('../models/rating');
 
 
 exports.get_ratings_for_user = async (req, res) => {
@@ -14,18 +15,7 @@ exports.get_ratings_for_user = async (req, res) => {
         let ratings = [];
 
         result.forEach(item => {
-            let rating = {
-                "id": item.id,
-                "value": item.value,
-                "comment": item.comment,
-                "createdUser": {
-                    "id": item.userId,
-                    "name": item.name
-                },
-                "createdTime": item.created_time,
-                "updateTime": item.update_time
-            };
-            ratings.push(rating);
+            ratings.push(rating(item));
         });
 
         res.status(200).json(ratings);

@@ -6,23 +6,14 @@ const { getRatingById,
     deleteRating
 } = require("../database/rating");
 
+const { rating } = require('../models/rating');
+
 exports.get_ratings_for_location = async (req, res) => {
     await getRatingsForLocation(req.params.locationId).then(result => {
         let ratings = [];
 
         result.forEach(item => {
-            let rating = {
-                "id": item.id,
-                "value": item.value,
-                "comment": item.comment,
-                "createdUser": {
-                    "id": item.userId,
-                    "name": item.name
-                },
-                "createdTime": item.created_time,
-                "updateTime": item.update_time
-            };
-            ratings.push(rating);
+            ratings.push(rating(item));
         });
 
         res.status(200).json(ratings);
@@ -45,19 +36,7 @@ exports.insert_rating = async (req, res) => {
     await insertRating(req.params.locationId, req.body).then(async result => {
         await getRatingById(result.insertId).then(result => {
             result = result[0];
-            let rating = {
-                "id": result.id,
-                "value": result.value,
-                "comment": result.comment,
-                "createdUser": {
-                    "id": result.userId,
-                    "name": result.name
-                },
-                "createdTime": result.created_time,
-                "updateTime": result.update_time
-            };
-
-            res.status(200).json(rating);
+            res.status(200).json(rating(result));
         }).catch(err => {
             res.status(500).json(err);
         });
@@ -71,19 +50,7 @@ exports.edit_rating = async (req, res) => {
     await editRating(req.params.ratingId, req.body).then(async result => {
         await getRatingById(req.params.ratingId).then(result => {
             result = result[0];
-            let rating = {
-                "id": result.id,
-                "value": result.value,
-                "comment": result.comment,
-                "createdUser": {
-                    "id": result.userId,
-                    "name": result.name
-                },
-                "createdTime": result.created_time,
-                "updateTime": result.update_time
-            };
-
-            res.status(200).json(rating);
+            res.status(200).json(rating(result));
         }).catch(err => {
             console.log(err);
             res.status(500).json(err);

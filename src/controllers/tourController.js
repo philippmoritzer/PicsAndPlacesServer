@@ -10,9 +10,7 @@ exports.get_tours = async (req, res) => {
             const tour_item = (tour(item));
             item.locations.forEach((item, index, array) => {
                 item.id = item.location_id;
-
                 tour_item.locations.push(location(item));
-                console.log(location(item));
 
             });
             tours.push(tour_item);
@@ -29,7 +27,21 @@ exports.get_tours = async (req, res) => {
 }
 
 exports.get_random_tours = async (req, res) => {
+    await getTours(req.params.amount).then(result => {
+        let tours = [];
+        result.forEach((item, index, array) => {
+            const tour_item = (tour(item));
+            item.locations.forEach((item, index, array) => {
+                item.id = item.location_id;
+                tour_item.locations.push(location(item));
 
+            });
+            tours.push(tour_item);
+            if (index === array.length - 1) {
+                res.status(200).json(tours);
+            }
+        });
+    })
 }
 
 exports.get_tour_by_id = async (req, res) => {

@@ -1,10 +1,10 @@
 const { getDatabase } = require("./mysql");
 
-async function getTours() {
+async function getTours(amount) {
     const database = await getDatabase();
 
     let query = "SELECT tour.id, tour.name, tour.description, tour.length, tour.created_time AS tour_created_time, tour.update_time AS tour_update_time, category.id as categoryid, category.name as categoryname, category.hexcolor"
-        + " FROM tour INNER JOIN category ON tour.category_id = category.id;";
+        + " FROM tour INNER JOIN category ON tour.category_id = category.id ";
 
     let childQuery = "SELECT location_id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, location.created_time, location.update_time, user.name AS username, user.id AS userid FROM location_tour"
@@ -15,6 +15,10 @@ async function getTours() {
         + " INNER JOIN city ON address.zipcode = city.zipcode AND address.country_id = city.country_id"
         + " INNER JOIN country ON city.country_id = country.id"
         + " WHERE location_tour.tour_id = ";
+
+    if (amount) {
+        query = query + "ORDER BY RAND() LIMIT " + amount + ";";
+    }
 
     return new Promise((resolve, reject) => {
         database.query(query, (err, resRows) => {

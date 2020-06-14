@@ -1,6 +1,5 @@
 
-
-const tour = (item) => {
+const tour = item => {
     return tour_item = {
         "id": item.id,
         "name": item.name,
