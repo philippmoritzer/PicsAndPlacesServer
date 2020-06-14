@@ -1,5 +1,5 @@
 const { getDatabase } = require("./mysql");
-const { getMediaFilesForLocation, deleteMedia } = require("./media");
+const { getMediaFilesForLocation } = require("./media");
 
 async function getLocations(categoryFilter) {
     const database = await getDatabase();

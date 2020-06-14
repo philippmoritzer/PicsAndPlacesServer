@@ -8,46 +8,18 @@ const {
     updateLocation,
 } = require("../database/location");
 
+const { location } = require('../models/location');
+
 exports.get_locations = async (req, res) => {
 
     await getLocations(req.query.category).then(result => {
-
         let locations = [];
-        result.forEach(async (item) => {
-            var location_item = {
-                "id": item.id,
-                "name": item.name,
-                "description": item.description,
-                "latitude": item.latitude,
-                "longitude": item.longitude,
-                "category": {
-                    "id": item.categoryid,
-                    "name": item.categoryname,
-                    "hexcolor": item.hexcolor
-                },
-                "address": {
-                    "country": {
-                        "name": item.countryname
-                    },
-                    "city": {
-                        "zipcode": item.zipcode,
-                        "name": item.cityname
-                    },
-                    "street": item.street,
-                    "number": item.number
-                },
-                "mediaList": item.mediaFiles,
-                "createUser": {
-                    "id": item.userid,
-                    "name": item.username
-                },
-                "createdTime": item.created_time,
-                "updateTime": item.update_time
-            };
-
+        result.forEach((item, index, array) => {
+            const location_item = location(item);
             locations.push(location_item);
         });
         res.status(200).json(locations);
+
     }).catch(err => {
         res.status(500).send(err);
     });

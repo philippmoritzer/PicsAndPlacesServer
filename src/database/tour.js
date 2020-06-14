@@ -24,7 +24,6 @@ async function getTours() {
                     database.query(newQuery, (err, rows) => {
                         if (!err) {
                             resRows[index]['locations'] = rows;
-                            console.log(rows);
                             if (index === array.length - 1) {
                                 resolve(resRows);
                             }
