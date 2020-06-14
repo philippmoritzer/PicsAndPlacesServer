@@ -7,6 +7,12 @@ const {
     getRatingsForUser
 } = require("../database/rating");
 
+const {
+    getLocationByUserId
+} = require('../database/location');
+
+const { location } = require('../models/location');
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -39,8 +45,6 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
 
     bcrypt.hash(req.body.password, 12, async (err, enc) => {
-        console.log("HALLO");
-
         req.body.password = enc;
         await signup(req.body).then(async result => {
             result = result[0];
@@ -80,4 +84,18 @@ exports.get_ratings_for_user = async (req, res) => {
         res.status(500).json(err);
     });
 }
+
+exports.get_location_by_user_id = async (req, res) => {
+    console.log(req.params);
+    await getLocationByUserId(req.params.userId).then(result => {
+        let locations = [];
+        result.forEach(async (item) => {
+            locations.push(location(item));
+        });
+        res.status(200).json(locations);
+    }).catch(error => {
+        res.status(500).json(error);
+    });
+
+};
 

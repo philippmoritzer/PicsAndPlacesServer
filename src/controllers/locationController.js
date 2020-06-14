@@ -51,20 +51,6 @@ exports.get_location_by_name = async (req, res) => {
 
 };
 
-exports.get_location_by_user_id = async (req, res) => {
-    console.log(req.params);
-    await getLocationByUserId(req.params.userId).then(result => {
-        let locations = [];
-        result.forEach(async (item) => {
-            locations.push(location(item));
-        });
-        res.status(200).json(locations);
-    }).catch(error => {
-        res.status(500).json(error);
-    });
-
-};
-
 exports.insert_location = async (req, res) => {
     await insertLocation(req.body).then(async result => {
         await getLocationById(result.insertId).then(result => {
