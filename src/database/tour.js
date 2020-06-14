@@ -66,7 +66,6 @@ async function getTourById(tourId) {
                     database.query(childQuery, (err, rows) => {
                         if (!err) {
                             resRows[index]['locations'] = rows;
-                            console.log(rows);
                             if (index === array.length - 1) {
                                 resolve(resRows[0]);
                             }
