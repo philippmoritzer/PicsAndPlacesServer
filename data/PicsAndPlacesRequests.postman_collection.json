@@ -1,0 +1,598 @@
+{
+	"info": {
+		"_postman_id": "0e482b6d-37be-4866-a25d-2c8484839b09",
+		"name": "PicsAndPlacesRequests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Location",
+			"item": [
+				{
+					"name": "localhost:3001/location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location?category=1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location?category=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location/search/Pier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/search/Pier",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"search",
+								"Pier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MiwiaWF0IjoxNTg5Nzk5Mjg3LCJleHAiOjE1ODk5Mjg4ODd9.4OAryRBbcrhJTw3_k4h2kCIMLaygIo0Zl72Abv3j0qg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"location\": {\n\t\t\"name\":\"Final API-Test\",\n\t\t\"description\": \"Final API-Test Description\",\n\t\t\"latitude\": 3.90182,\n\t\t\"longitude\": -5.3812,\n\t\t\"category\": {\n\t\t\t\"id\": 1,\n\t\t\t\"name\": \"Sehenswürdigkeiten\"\n\t\t},\n\t\t\"address\": {\n\t\t\t\"country\": {\n\t\t\t\t\"name\":\t\"Canada\"\n\t\t\t},\n\t\t\t\"city\": {\n\t\t\t\t\"zipcode\": 30312,\n\t\t\t\t\"name\": \"Toronto\"\n\t\t\t},\n\t\t\t\"street\": \"Final API-Test Street\",\n\t\t\t\"number\": 551\n\t\t},\n\t\t\"mediaList\":[],\n\t\t\"createUser\": {\n\t\t\t\"id\": 1\t\n\t\t}\n\t\t\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/location",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location"
+							]
+						},
+						"description": "POST Location"
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/location",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 36,\r\n  \"name\": \"Not quiet Lars\",\r\n  \"description\": \"Erster über die Webanwendung editierter Ort\",\r\n  \"latitude\": 53.0812272713964,\r\n  \"longitude\": 8.850728590269583,\r\n  \"category\": { \"id\": 2, \"name\": \"undefined\" },\r\n  \"address\": {\r\n    \"country\": { \"name\": \"Germany\" },\r\n    \"city\": { \"zipcode\": 28211, \"name\": \"bremen\" },\r\n    \"street\": \"Belfortstraße\",\r\n    \"number\": 5\r\n  },\r\n  \"mediaList\": [\r\n    {\r\n      \"id\": 25,\r\n      \"date\": \"2020-05-22T20:50:13.000Z\",\r\n      \"mediapath\": \"media-upload/media_1590187813572_0.jpg\"\r\n    },\r\n    {\r\n      \"id\": 26,\r\n      \"date\": \"2020-05-22T20:50:13.000Z\",\r\n      \"mediapath\": \"media-upload/media_1590187813581_0.jpg\"\r\n    }\r\n  ],\r\n  \"createUser\": { \"id\": 1, \"name\": \"Jan\" }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/location/30",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/location/30",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/30",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"30"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "localhost:3001/auth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mail\": \"pmoritzer@stud.hs-bremen.de\",\n\t\"password\": \"thisshouldbeahashvalue\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/auth",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/auth/signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"mail\": \"testmail2@testproivder.de\",\n\t\"name\": \"23einhalb\",\n\t\"password\": \"Hallo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Media",
+			"item": [
+				{
+					"name": "localhost:3001/location/media",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "media",
+									"type": "file",
+									"src": "/C:/Users/Philipp Moritzer/Desktop/Cerros_Mavecure,_Inirida._-_panoramio.jpg"
+								},
+								{
+									"key": "locationId",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3001/api/location/58/media",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"58",
+								"media"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/location/media/20",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/media/20",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"media",
+								"20"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Rating",
+			"item": [
+				{
+					"name": "localhost:3001/api/location/36/rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/36/rating",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"36",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location/36/rating/avg",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/36/rating/avg",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"36",
+								"rating",
+								"avg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location/36/rating",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"value\": 1,\n\t\"comment\": \"Nachtrag: Es war nicht positiv xD\",\n\t\"createdUser\": {\n\t\t\"id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/location/36/rating",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"36",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location/63/rating/25",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"this comment is edited\",\r\n    \"value\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/location/63/rating/25",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"63",
+								"rating",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/location/36/rating/25",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/36/rating/25",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"36",
+								"rating",
+								"25"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Tour",
+			"item": [
+				{
+					"name": "localhost:3001/api/tour",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/tour",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/tour/7",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/tour/7",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/tour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"locations\": [60, 61, 62, 63, 64]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/tour",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/tour/7",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/tour/7",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/tour/13",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"addedLocations\": [],\r\n    \"removedLocations\": [60, 63, 64]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/tour/13",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour",
+								"13"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "UserData",
+			"item": [
+				{
+					"name": "localhost:3001/api/user/1/rating",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/1/rating",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/user/1/location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/1/location",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"1",
+								"location"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
