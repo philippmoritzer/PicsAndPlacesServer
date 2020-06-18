@@ -5,6 +5,11 @@ const tour = item => {
         "name": item.name,
         "description": item.description,
         "length": item.length,
+        "user": {
+            "id": item.userid,
+            "name": item.username,
+            "role": item.role
+        },
         "category": {
             "id": item.categoryid,
             "name": item.categoryname,

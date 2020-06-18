@@ -3,8 +3,10 @@ const { getDatabase } = require("./mysql");
 async function getTours(amount) {
     const database = await getDatabase();
 
-    let query = "SELECT tour.id, tour.name, tour.description, tour.length, tour.created_time AS tour_created_time, tour.update_time AS tour_update_time, category.id as categoryid, category.name as categoryname, category.hexcolor"
-        + " FROM tour INNER JOIN category ON tour.category_id = category.id ";
+    let query = "SELECT tour.id, tour.name, tour.description, tour.length, tour.created_time AS tour_created_time, tour.update_time AS tour_update_time, category.id as categoryid, category.name as categoryname, category.hexcolor, "
+        + "user.name AS username, user.id AS userid, user.role"
+        + " FROM tour INNER JOIN category ON tour.category_id = category.id INNER JOIN user ON tour.create_user_id = user.id ";
+
 
     let childQuery = "SELECT location_id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, location.created_time, location.update_time, user.name AS username, user.id AS userid FROM location_tour"
@@ -45,8 +47,9 @@ async function getTours(amount) {
 
 async function getTourById(tourId) {
     const database = await getDatabase();
-    let query = "SELECT tour.id, tour.name, tour.description, tour.length, tour.created_time AS tour_created_time, tour.update_time AS tour_update_time, category.id as categoryid, category.name as categoryname, category.hexcolor"
-        + " FROM tour INNER JOIN category ON tour.category_id = category.id WHERE tour.id = '" + tourId + "';";
+    let query = "SELECT tour.id, tour.name, tour.description, tour.length, tour.created_time AS tour_created_time, tour.update_time AS tour_update_time, category.id as categoryid, category.name as categoryname, category.hexcolor, "
+        + "user.name AS username, user.id AS userid, user.role"
+        + " FROM tour INNER JOIN category ON tour.category_id = category.id INNER JOIN user ON tour.create_user_id = user.id WHERE tour.id = '" + tourId + "';";
 
     let childQuery = "SELECT location_id, location.name, description, latitude, longitude, category.name AS categoryname, category.id AS categoryid, category.hexcolor, address.street,"
         + " address.number, address.zipcode, country.name AS countryname, city.city AS cityname, location.created_time, location.update_time, user.name AS username, user.id AS userid FROM location_tour"
@@ -83,7 +86,7 @@ async function getTourById(tourId) {
 
 async function insertTour(tour) {
     const database = await getDatabase();
-    let query = "INSERT INTO tour VALUES(null, '" + tour.name + "', '" + tour.description + "', '" + tour.length + "', '" + tour.category.id + "', now(), null);"
+    let query = "INSERT INTO tour VALUES(null, '" + tour.name + "', '" + tour.description + "', '" + tour.length + "', '" + tour.category.id + "', now(), null, '" + tour.createUser.id + "');"
 
     return new Promise((resolve, reject) => {
         database.query(query, (err, resRows) => {
