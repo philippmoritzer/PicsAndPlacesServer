@@ -5,7 +5,7 @@ const tour = item => {
         "name": item.name,
         "description": item.description,
         "length": item.length,
-        "user": {
+        "createUser": {
             "id": item.userid,
             "name": item.username,
             "role": item.role
@@ -16,8 +16,8 @@ const tour = item => {
             "hexcolor": item.hexcolor
         },
         locations: [],
-        "created_time": item.tour_created_time,
-        "update_time": item.tour_update_time
+        "createdTime": item.tour_created_time,
+        "updateTime": item.tour_update_time
     }
 
 }

@@ -112,7 +112,7 @@ async function editTour(tourId, tour) {
     const removedLocations = tour.removedLocations;
     const addedLocations = tour.addedLocations;
 
-    let query = "UPDATE tour SET name = '" + tour.name + "', description = '" + tour.description + "', length = '" + tour.length + "', category_id = '" + tour.category.id + "' WHERE id = '" + tourId + "';"
+    let query = "UPDATE tour SET name = '" + tour.name + "', description = '" + tour.description + "', length = '" + tour.length + "', category_id = '" + tour.category.id + "', update_time = now() WHERE id = '" + tourId + "';"
     let deleteLocationsQuery = "DELETE FROM location_tour WHERE tour_id = '" + tourId + "' AND location_id = ";
     let insertLocationsQuery = "INSERT INTO location_tour VALUES('";
 

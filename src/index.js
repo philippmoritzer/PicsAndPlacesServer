@@ -5,10 +5,13 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const { startDatabase } = require("./database/mysql");
 
-;
 
 // defining the Express app
 const app = express();
+const http = require('http').createServer(app);
+global.io = require('socket.io')(http);
+const socket = require('./socket/socket');
+
 
 // adding Helmet to enhance your API's security
 app.use(helmet());
@@ -34,7 +37,7 @@ app.use('/media-upload', express.static('media-upload'));
 
 // starting the server
 startDatabase().then(async () => {
-  app.listen(3001, () => {
+  http.listen(3001, () => {
     console.log("listening on port 3001");
   });
 });

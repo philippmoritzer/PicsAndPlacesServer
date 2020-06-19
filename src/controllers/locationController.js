@@ -55,7 +55,10 @@ exports.insert_location = async (req, res) => {
     await insertLocation(req.body).then(async result => {
         await getLocationById(result.insertId).then(result => {
             result = result[0];
-            res.status(200).json(location(result));
+            const resultLocation = location(result);
+            global.io.emit('locationinsert', resultLocation);
+
+            res.status(200).json(resultLocation);
         }).catch(error => {
             res.status(500).json(error);
         });
