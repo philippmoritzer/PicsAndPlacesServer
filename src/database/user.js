@@ -66,11 +66,26 @@ async function getPasswordHash(userId) {
     });
 }
 
+async function getUserInfo(userId) {
+    const database = await getDatabase();
+    let query = "SELECT id, name, mail, role FROM user WHERE id = '" + userId + "'";
+    return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
+            if (!err) {
+                resolve(rows[0]);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
 
 
 module.exports = {
     login,
     signup,
     changePassword,
-    getPasswordHash
+    getPasswordHash,
+    getUserInfo
 }

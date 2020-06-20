@@ -10,6 +10,10 @@ const {
     getTourByUserId
 } = require('../database/tour');
 
+const {
+    getUserInfo
+} = require('../database/user');
+
 const { location } = require('../models/location');
 const { tour } = require('../models/tour');
 const { rating } = require('../models/rating');
@@ -59,4 +63,18 @@ exports.get_tour_by_user_id = async (req, res) => {
             }
         });
     })
+}
+
+exports.get_user_info = async (req, res) => {
+    await getUserInfo(req.params.userId).then(result => {
+        let user = {
+            "id": result.id,
+            "mail": result.mail,
+            "name": result.name,
+            "role": result.role
+        }
+        res.status(200).json(user);
+    }).catch(err => {
+        res.status(500).json(err);
+    });
 }
