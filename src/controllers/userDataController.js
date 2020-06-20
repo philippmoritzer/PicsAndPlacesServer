@@ -6,7 +6,12 @@ const {
     getLocationByUserId
 } = require('../database/location');
 
+const {
+    getTourByUserId
+} = require('../database/tour');
+
 const { location } = require('../models/location');
+const { tour } = require('../models/tour');
 const { rating } = require('../models/rating');
 
 
@@ -37,3 +42,21 @@ exports.get_location_by_user_id = async (req, res) => {
     });
 
 };
+
+exports.get_tour_by_user_id = async (req, res) => {
+    await getTourByUserId(req.params.userId).then(result => {
+        let tours = [];
+        result.forEach((item, index, array) => {
+            const tour_item = (tour(item));
+            item.locations.forEach((item, index, array) => {
+                item.id = item.location_id;
+                tour_item.locations.push(location(item));
+
+            });
+            tours.push(tour_item);
+            if (index === array.length - 1) {
+                res.status(200).json(tours);
+            }
+        });
+    })
+}
