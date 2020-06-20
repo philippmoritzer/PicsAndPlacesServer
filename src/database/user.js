@@ -17,7 +17,6 @@ async function login(mail, password) {
 }
 
 async function signup(user) {
-    console.log(user);
     const database = await getDatabase();
     let query = "INSERT INTO user VALUES(null, '" + user.mail + "', '" + user.name + "', '" + user.password + "', '1');"
     return new Promise((resolve, reject) => {
@@ -39,7 +38,39 @@ async function signup(user) {
     });
 }
 
+async function changePassword(userId, password) {
+    const database = await getDatabase();
+    let query = "UPDATE user SET password = '" + password + "' WHERE id = '" + userId + "'";
+    return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
+            if (!err) {
+                resolve(rows);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+async function getPasswordHash(userId) {
+    const database = await getDatabase();
+    let query = "SELECT password FROM user WHERE id = '" + userId + "'";
+    return new Promise((resolve, reject) => {
+        database.query(query, (err, rows) => {
+            if (!err) {
+                resolve(rows[0]);
+            } else {
+                reject(err);
+            }
+        });
+    });
+}
+
+
+
 module.exports = {
     login,
-    signup
+    signup,
+    changePassword,
+    getPasswordHash
 }

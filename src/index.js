@@ -10,7 +10,7 @@ const { startDatabase } = require("./database/mysql");
 const app = express();
 const http = require('http').createServer(app);
 global.io = require('socket.io')(http);
-const socket = require('./socket/socket');
+// const socket = require('./socket/socket');
 
 
 // adding Helmet to enhance your API's security

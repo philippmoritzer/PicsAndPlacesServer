@@ -1,6 +1,8 @@
 const {
     login,
     signup,
+    changePassword,
+    getPasswordHash
 } = require("../database/user");
 
 
@@ -50,6 +52,41 @@ exports.signup = async (req, res) => {
     })
 
 
+}
+
+exports.change_password = async (req, res) => {
+    const userId = req.body.userId;
+    const oldPw = req.body.oldPassword;
+    const newPw = req.body.newPassword;
+
+    await getPasswordHash(userId).then(result => {
+        console.log(result.password);
+        bcrypt.compare(oldPw, result.password).then(async result => {
+            if (result) {
+                bcrypt.hash(newPw, 12, async (err, enc) => {
+                    if (!err) {
+                        await changePassword(userId, enc).then(result => {
+                            res.status(200).json({ success: 'Password successfully changed' });
+                        }).catch(err => {
+                            res.status(500).json(err);
+                        });
+                    } else {
+                        res.status(500).json(err);
+
+                    }
+
+                });
+
+            } else {
+                res.status(401).json({ error: 'Wrong password entered' });
+            }
+        }).catch(err => {
+            res.status(500).json(err);
+        })
+
+    }).catch(err => {
+        res.status(500).json(err);
+    });
 }
 
 
