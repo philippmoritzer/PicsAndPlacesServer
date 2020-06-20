@@ -9,7 +9,7 @@
 			"name": "Location",
 			"item": [
 				{
-					"name": "localhost:3001/location",
+					"name": "localhost:3001/api/location",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -74,7 +74,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3001/location",
+					"name": "localhost:3001/api/location",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -113,7 +113,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3001/location",
+					"name": "localhost:3001/api/location",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -142,7 +142,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3001/location/30",
+					"name": "localhost:3001/api/location/30",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -168,7 +168,7 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "localhost:3001/auth",
+					"name": "localhost:3001/api/auth",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -223,6 +223,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "localhost:3001/api/auth/password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 14,\r\n    \"oldPassword\": \"hallo\",\r\n    \"newPassword\": \"halloneu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3001/api/auth/password",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"password"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -231,7 +260,7 @@
 			"name": "Media",
 			"item": [
 				{
-					"name": "localhost:3001/location/media",
+					"name": "localhost:3001/api/location/media",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -268,7 +297,7 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3001/location/media/20",
+					"name": "localhost:3001/api/location/media/20",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -451,7 +480,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/tour/7",
+							"raw": "localhost:3001/api/tour/21",
 							"host": [
 								"localhost"
 							],
@@ -459,7 +488,7 @@
 							"path": [
 								"api",
 								"tour",
-								"7"
+								"21"
 							]
 						}
 					},
@@ -472,7 +501,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"locations\": [60, 61, 62, 63, 64]\r\n}",
+							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"createUser\": {\r\n        \"id\": 1\r\n    },\r\n    \"locations\": [60, 61, 62, 63, 64]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -585,6 +614,47 @@
 								"user",
 								"1",
 								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/user/14/tour",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/14/tour",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"14",
+								"tour"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/user/14",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/user/14",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"user",
+								"14"
 							]
 						}
 					},
