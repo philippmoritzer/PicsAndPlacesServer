@@ -56,6 +56,7 @@ exports.insert_location = async (req, res) => {
         await getLocationById(result.insertId).then(result => {
             result = result[0];
             const resultLocation = location(result);
+            console.log(resultLocation);
             global.io.emit('locationinsert', resultLocation);
 
             res.status(200).json(resultLocation);
@@ -85,6 +86,8 @@ exports.update_location = async (req, res) => {
 
 exports.delete_location = async (req, res) => {
     await deleteLocation(req.params.locationId).then(result => {
+        const data = { data: req.params.locationId };
+        global.io.emit('locationdelete', data);
         res.status(200).json(result);
     }).catch(error => {
         res.status(500).json(error);
