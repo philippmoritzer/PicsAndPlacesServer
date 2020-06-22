@@ -6,7 +6,6 @@ async function insertMedia(locationId, mediapath) {
     return new Promise((resolve, reject) => {
         let media_query = "INSERT INTO media VALUES(null, now(), '" + mediapath + "', '" + locationId + "');"
         database.query(media_query, (err, rows) => {
-            console.log(rows);
             if (!err) {
                 resolve(rows);
             } else {
@@ -22,7 +21,6 @@ async function deleteMedia(mediaId) {
     return new Promise((resolve, reject) => {
         let delete_media_query = "DELETE FROM media WHERE id = '" + mediaId + "';"
         database.query(delete_media_query, (err, rows) => {
-            console.log(rows);
             if (!err) {
                 resolve(rows);
             } else {

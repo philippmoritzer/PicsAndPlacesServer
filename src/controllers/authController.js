@@ -29,7 +29,6 @@ exports.login = async (req, res) => {
             }
         });
     }).catch(error => {
-        console.log(error);
         res.status(500).json(error);
     });
 }
@@ -58,7 +57,6 @@ exports.change_password = async (req, res) => {
     const newPw = req.body.newPassword;
 
     await getPasswordHash(userId).then(result => {
-        console.log(result.password);
         bcrypt.compare(oldPw, result.password).then(async result => {
             if (result) {
                 bcrypt.hash(newPw, 12, async (err, enc) => {

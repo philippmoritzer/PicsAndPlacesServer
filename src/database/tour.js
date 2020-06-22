@@ -161,7 +161,6 @@ async function editTour(tourId, tour) {
 
         database.query(query, (err, rows) => {
             if (!err) {
-                console.log(addedLocations.length);
                 if (addedLocations.length <= 0 && removedLocations <= 0) {
                     resolve(tourId);
                 }

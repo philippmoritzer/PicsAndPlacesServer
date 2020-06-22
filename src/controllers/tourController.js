@@ -20,7 +20,6 @@ exports.get_tours = async (req, res) => {
         });
 
     }).catch(err => {
-        console.log(err);
         res.status(500).json(err);
     });
 
@@ -58,7 +57,6 @@ exports.get_tour_by_id = async (req, res) => {
         });
 
     }).catch(err => {
-        console.log(err);
         res.status(500).json(err);
     });
 

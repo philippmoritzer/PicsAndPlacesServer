@@ -9,7 +9,6 @@ async function getCategories() {
         if (!err) {
           resolve(rows);
         } else {
-          console.log("Error while performing Query." + err.message);
           reject(err);
         }
       }
@@ -26,7 +25,6 @@ async function getCategoryById(id) {
         if (!err) {
           resolve(rows);
         } else {
-          console.log("Error while performing Query." + err.message);
           reject(err);
         }
       }

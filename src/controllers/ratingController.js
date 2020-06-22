@@ -52,7 +52,6 @@ exports.edit_rating = async (req, res) => {
             result = result[0];
             res.status(200).json(rating(result));
         }).catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
     }).catch(err => {

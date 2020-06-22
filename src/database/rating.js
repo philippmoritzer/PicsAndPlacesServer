@@ -26,7 +26,6 @@ async function getRatingsForLocation(locationId) {
 
     return new Promise((resolve, reject) => {
         database.query(query, (err, rows) => {
-            console.log(rows);
             if (!err) {
                 resolve(rows);
             } else {
@@ -44,7 +43,6 @@ async function getRatingsForUser(userId) {
 
     return new Promise((resolve, reject) => {
         database.query(query, (err, rows) => {
-            console.log(rows);
             if (!err) {
                 resolve(rows);
             } else {
@@ -74,7 +72,6 @@ async function insertRating(locationId, rating) {
 
     return new Promise((resolve, reject) => {
         database.query(query, (err, rows) => {
-            console.log(rows);
             if (!err) {
                 resolve(rows);
             } else {

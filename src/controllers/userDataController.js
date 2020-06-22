@@ -34,7 +34,6 @@ exports.get_ratings_for_user = async (req, res) => {
 }
 
 exports.get_location_by_user_id = async (req, res) => {
-    console.log(req.params);
     await getLocationByUserId(req.params.userId).then(result => {
         let locations = [];
         result.forEach(async (item) => {
