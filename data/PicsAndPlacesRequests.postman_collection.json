@@ -28,6 +28,26 @@
 					"response": []
 				},
 				{
+					"name": "localhost:3001/api/location/92",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/location/92",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"location",
+								"92"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "localhost:3001/api/location?category=1",
 					"request": {
 						"method": "GET",
@@ -81,7 +101,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MiwiaWF0IjoxNTg5Nzk5Mjg3LCJleHAiOjE1ODk5Mjg4ODd9.4OAryRBbcrhJTw3_k4h2kCIMLaygIo0Zl72Abv3j0qg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
 									"type": "string"
 								}
 							]
@@ -90,7 +110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"location\": {\n\t\t\"name\":\"Final API-Test\",\n\t\t\"description\": \"Final API-Test Description\",\n\t\t\"latitude\": 3.90182,\n\t\t\"longitude\": -5.3812,\n\t\t\"category\": {\n\t\t\t\"id\": 1,\n\t\t\t\"name\": \"Sehenswürdigkeiten\"\n\t\t},\n\t\t\"address\": {\n\t\t\t\"country\": {\n\t\t\t\t\"name\":\t\"Canada\"\n\t\t\t},\n\t\t\t\"city\": {\n\t\t\t\t\"zipcode\": 30312,\n\t\t\t\t\"name\": \"Toronto\"\n\t\t\t},\n\t\t\t\"street\": \"Final API-Test Street\",\n\t\t\t\"number\": 551\n\t\t},\n\t\t\"mediaList\":[],\n\t\t\"createUser\": {\n\t\t\t\"id\": 1\t\n\t\t}\n\t\t\n\t}\n}",
+							"raw": "{\n   \"name\":\"Final API-Test\",\n   \"description\":\"Final API-Test Description\",\n   \"latitude\":3.90182,\n   \"longitude\":-5.3812,\n   \"category\":{\n      \"id\":1,\n      \"name\":\"Sehenswürdigkeiten\"\n   },\n   \"address\":{\n      \"country\":{\n         \"name\":\"China\"\n      },\n      \"city\":{\n         \"zipcode\":44112,\n         \"name\":\"Bejing\"\n      },\n      \"street\":\"API Auth-Test\",\n      \"number\":41\n   },\n   \"mediaList\":[\n\n   ],\n   \"createUser\":{\n      \"id\":1\n   }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,11 +135,21 @@
 				{
 					"name": "localhost:3001/api/location",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": 36,\r\n  \"name\": \"Not quiet Lars\",\r\n  \"description\": \"Erster über die Webanwendung editierter Ort\",\r\n  \"latitude\": 53.0812272713964,\r\n  \"longitude\": 8.850728590269583,\r\n  \"category\": { \"id\": 2, \"name\": \"undefined\" },\r\n  \"address\": {\r\n    \"country\": { \"name\": \"Germany\" },\r\n    \"city\": { \"zipcode\": 28211, \"name\": \"bremen\" },\r\n    \"street\": \"Belfortstraße\",\r\n    \"number\": 5\r\n  },\r\n  \"mediaList\": [\r\n    {\r\n      \"id\": 25,\r\n      \"date\": \"2020-05-22T20:50:13.000Z\",\r\n      \"mediapath\": \"media-upload/media_1590187813572_0.jpg\"\r\n    },\r\n    {\r\n      \"id\": 26,\r\n      \"date\": \"2020-05-22T20:50:13.000Z\",\r\n      \"mediapath\": \"media-upload/media_1590187813581_0.jpg\"\r\n    }\r\n  ],\r\n  \"createUser\": { \"id\": 1, \"name\": \"Jan\" }\r\n}",
+							"raw": "{\r\n    \"id\": 92,\r\n    \"name\": \"Final API-Test EDITED\",\r\n    \"description\": \"Final API-Test Description\",\r\n    \"latitude\": 3.90182,\r\n    \"longitude\": -5.3812,\r\n    \"category\": {\r\n        \"id\": 1,\r\n        \"name\": \"Sehenswürdigkeit\",\r\n        \"hexcolor\": \"#C62828\"\r\n    },\r\n    \"address\": {\r\n        \"country\": {\r\n            \"name\": \"China\"\r\n        },\r\n        \"city\": {\r\n            \"zipcode\": \"44112\",\r\n            \"name\": \"Bejing\"\r\n        },\r\n        \"street\": \"API Auth-Test\",\r\n        \"number\": 41\r\n    },\r\n    \"mediaList\": [],\r\n    \"createUser\": {\r\n        \"id\": 1,\r\n        \"name\": \"Jan\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -127,7 +157,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/location/30",
+							"raw": "localhost:3001/api/location/92",
 							"host": [
 								"localhost"
 							],
@@ -135,7 +165,7 @@
 							"path": [
 								"api",
 								"location",
-								"30"
+								"92"
 							]
 						}
 					},
@@ -144,10 +174,20 @@
 				{
 					"name": "localhost:3001/api/location/30",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/location/30",
+							"raw": "localhost:3001/api/location/92",
 							"host": [
 								"localhost"
 							],
@@ -155,7 +195,7 @@
 							"path": [
 								"api",
 								"location",
-								"30"
+								"92"
 							]
 						}
 					},
@@ -174,7 +214,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"mail\": \"pmoritzer@stud.hs-bremen.de\",\n\t\"password\": \"thisshouldbeahashvalue\"\n}",
+							"raw": "{\n\t\"mail\": \"pmoritzer@stud.hs-bremen.de\",\n\t\"password\": \"hallo\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -227,11 +267,21 @@
 				{
 					"name": "localhost:3001/api/auth/password",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userId\": 14,\r\n    \"oldPassword\": \"hallo\",\r\n    \"newPassword\": \"halloneu\"\r\n}",
+							"raw": "{\r\n    \"userId\": 14,\r\n    \"oldPassword\": \"geheim\",\r\n    \"newPassword\": \"geheimer\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -262,6 +312,16 @@
 				{
 					"name": "localhost:3001/api/location/media",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -299,10 +359,20 @@
 				{
 					"name": "localhost:3001/api/location/media/20",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/location/media/20",
+							"raw": "localhost:3001/api/location/58/media/79",
 							"host": [
 								"localhost"
 							],
@@ -310,8 +380,9 @@
 							"path": [
 								"api",
 								"location",
+								"58",
 								"media",
-								"20"
+								"79"
 							]
 						}
 					},
@@ -329,7 +400,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/location/36/rating",
+							"raw": "localhost:3001/api/location/77/rating",
 							"host": [
 								"localhost"
 							],
@@ -337,7 +408,7 @@
 							"path": [
 								"api",
 								"location",
-								"36",
+								"77",
 								"rating"
 							]
 						}
@@ -350,7 +421,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/location/36/rating/avg",
+							"raw": "localhost:3001/api/location/77/rating/avg",
 							"host": [
 								"localhost"
 							],
@@ -358,7 +429,7 @@
 							"path": [
 								"api",
 								"location",
-								"36",
+								"77",
 								"rating",
 								"avg"
 							]
@@ -369,6 +440,16 @@
 				{
 					"name": "localhost:3001/api/location/36/rating",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -381,7 +462,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/location/36/rating",
+							"raw": "localhost:3001/api/location/77/rating",
 							"host": [
 								"localhost"
 							],
@@ -389,7 +470,7 @@
 							"path": [
 								"api",
 								"location",
-								"36",
+								"77",
 								"rating"
 							]
 						}
@@ -399,6 +480,16 @@
 				{
 					"name": "localhost:3001/api/location/63/rating/25",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -411,7 +502,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/location/63/rating/25",
+							"raw": "localhost:3001/api/location/77/rating/48",
 							"host": [
 								"localhost"
 							],
@@ -419,9 +510,9 @@
 							"path": [
 								"api",
 								"location",
-								"63",
+								"77",
 								"rating",
-								"25"
+								"48"
 							]
 						}
 					},
@@ -430,10 +521,20 @@
 				{
 					"name": "localhost:3001/api/location/36/rating/25",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/location/36/rating/25",
+							"raw": "localhost:3001/api/location/77/rating/48",
 							"host": [
 								"localhost"
 							],
@@ -441,9 +542,9 @@
 							"path": [
 								"api",
 								"location",
-								"36",
+								"77",
 								"rating",
-								"25"
+								"48"
 							]
 						}
 					},
@@ -480,7 +581,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3001/api/tour/21",
+							"raw": "localhost:3001/api/tour/23",
 							"host": [
 								"localhost"
 							],
@@ -488,7 +589,7 @@
 							"path": [
 								"api",
 								"tour",
-								"21"
+								"23"
 							]
 						}
 					},
@@ -497,11 +598,21 @@
 				{
 					"name": "localhost:3001/api/tour",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"createUser\": {\r\n        \"id\": 1\r\n    },\r\n    \"locations\": [60, 61, 62, 63, 64]\r\n}",
+							"raw": "{\r\n    \"name\": \"Inserted by postman\",\r\n    \"description\": \"beschreiben\",\r\n    \"length\": 33,\r\n    \"category\": {\r\n        \"id\": 1\r\n    },\r\n    \"createUser\": {\r\n        \"id\": 1\r\n    },\r\n    \"locations\": [77]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -523,28 +634,18 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3001/api/tour/7",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:3001/api/tour/7",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"tour",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "localhost:3001/api/tour/13",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -557,7 +658,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3001/api/tour/13",
+							"raw": "localhost:3001/api/tour/23",
 							"host": [
 								"localhost"
 							],
@@ -565,7 +666,37 @@
 							"path": [
 								"api",
 								"tour",
-								"13"
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3001/api/tour/7",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IlBoaWxpcHAiLCJtYWlsIjoicG1vcml0emVyQHN0dWQuaHMtYnJlbWVuLmRlIiwicm9sZSI6MywiaWF0IjoxNTkyODMzMDUzLCJleHAiOjE1OTI5NjI2NTN9._7TCvZzf9vH6yytb4tilI4jFETR11YFAvaaA6QnfBvA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3001/api/tour/22",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"tour",
+								"22"
 							]
 						}
 					},

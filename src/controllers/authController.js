@@ -5,14 +5,12 @@ const {
     getPasswordHash
 } = require("../database/user");
 
-
-
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
 /**
- * login function that sends back an JWT-Token to get access to authenticated API-Endpoints 
+ * Login function that sends back an JWT-Token to get access to authenticated API-Endpoints 
  */
 exports.login = async (req, res) => {
     await login(req.body.mail, req.body.password).then(result => {

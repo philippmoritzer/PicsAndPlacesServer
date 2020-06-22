@@ -13,9 +13,9 @@ const location_controller = require("../controllers/locationController");
 router.get("/", location_controller.get_locations);
 router.get("/:locationId", location_controller.get_location_by_id);
 router.get("/search/:locationName", location_controller.get_location_by_name);
-router.post("/", location_controller.insert_location);
-router.put("/:locationId", location_controller.update_location);
-router.delete("/:locationId", location_controller.delete_location);
+router.post("/", jwtMW, location_controller.insert_location);
+router.put("/:locationId", jwtMW, location_controller.update_location);
+router.delete("/:locationId", jwtMW, location_controller.delete_location);
 
 //register subroutes
 router.use('/:locationId', media_router);
