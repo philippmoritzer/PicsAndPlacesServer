@@ -103,19 +103,21 @@ async function getLocationByName(name) {
         database.query(
             query,
             async (err, rows, fields) => {
-                if (!err) {
-                    rows.forEach(async (item, index, rows) => {
+                if (!err) {                           
+                    if  (rows.length <= 0) {        
+                       reject({reason: "empty"})      
+                    }
+                    rows.forEach(async (item, index, rows) => { 
                         await getMediaFilesForLocation(item.id).then(result => {
                             item.mediaFiles = result;
                             if (index == rows.length - 1) {
                                 resolve(rows);
                             }
-
                         }).catch(err => {
                             reject(err);
                         });
                     })
-                } else {
+                } else { 
                     reject(err);
                 }
             }

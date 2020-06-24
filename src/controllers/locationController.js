@@ -42,10 +42,13 @@ exports.get_location_by_name = async (req, res) => {
         result.forEach(item => {
             locations.push(location(item));
         });
-
         res.status(200).json(locations);
     }).catch(error => {
+        if (error.reason == "empty") {
+        res.status(500).send(error);
+        } else {
         res.status(200).send(error);
+        }
     });
 
 };
