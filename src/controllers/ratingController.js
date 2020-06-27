@@ -8,6 +8,12 @@ const { getRatingById,
 
 const { rating } = require('../models/rating');
 
+/**
+ * GET - Select
+ * Returns all Ratings for a location
+ * :locationId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_ratings_for_location = async (req, res) => {
     await getRatingsForLocation(req.params.locationId).then(result => {
         let ratings = [];
@@ -22,7 +28,12 @@ exports.get_ratings_for_location = async (req, res) => {
     });
 }
 
-
+/**
+ * GET - Select
+ * Returns the average rating for all ratings inside a location
+ * :locationId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_average_rating_value = async (req, res) => {
     await getAverageRatingValue(req.params.locationId).then(result => {
         result = result[0];
@@ -32,6 +43,12 @@ exports.get_average_rating_value = async (req, res) => {
     });
 }
 
+/**
+ * POST - Insert - Protected Route
+ * Inserts a new rating for a location
+ * :locationId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.insert_rating = async (req, res) => {
     await insertRating(req.params.locationId, req.body).then(async result => {
         await getRatingById(result.insertId).then(result => {
@@ -46,6 +63,12 @@ exports.insert_rating = async (req, res) => {
     });
 }
 
+/**
+ * PUT - Update - Protected Route
+ * Updates a rating for a location
+ * :locationId and :ratingId need to be provided in url
+ * Response Status 200, 500
+ */
 exports.edit_rating = async (req, res) => {
     await editRating(req.params.ratingId, req.body).then(async result => {
         await getRatingById(req.params.ratingId).then(result => {
@@ -59,10 +82,16 @@ exports.edit_rating = async (req, res) => {
     })
 }
 
+/**
+ * DELETE - Delete - Protected Route
+ * Deletes a rating inside a location
+ * :locationId and :ratingId need to be provided in url
+ * Response Status 200, 500
+ */
 exports.delete_rating = async (req, res) => {
     await deleteRating(req.params.ratingId).then(result => {
         res.status(200).json(result);
     }).catch(err => {
-        res.status(200).json(err);
+        res.status(500).json(err);
     });
 }

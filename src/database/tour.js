@@ -18,6 +18,7 @@ async function getTours(amount) {
         + " INNER JOIN country ON city.country_id = country.id"
         + " WHERE location_tour.tour_id = ";
 
+    //if random tour concat query with ordering by Rand()
     if (amount) {
         query = query + "ORDER BY RAND() LIMIT " + amount + ";";
     }

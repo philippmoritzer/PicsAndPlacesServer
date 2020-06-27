@@ -1,3 +1,5 @@
+//authController.js - controls everything user related (login, signup, password change)
+
 const {
     login,
     signup,
@@ -10,7 +12,9 @@ const bcrypt = require('bcrypt');
 
 
 /**
+ * POST - login
  * Login function that sends back an JWT-Token to get access to authenticated API-Endpoints 
+ * Response-Status 200, 401, 500
  */
 exports.login = async (req, res) => {
     await login(req.body.mail, req.body.password).then(result => {
@@ -33,6 +37,14 @@ exports.login = async (req, res) => {
     });
 }
 
+/**
+ * POST - Insert - Protected Route
+ * Sign up function - Creates a new account, creates an JWT-Authenticaiton Token
+ * and sends back the JWT-Token for access to private routes
+ * The data can be used to login
+ * req.body needs to contain "password", "mail" and "name"
+ * Response-Status: 200, 500
+ */
 exports.signup = async (req, res) => {
 
     bcrypt.hash(req.body.password, 12, async (err, enc) => {
@@ -51,6 +63,12 @@ exports.signup = async (req, res) => {
 
 }
 
+/**
+ * PUT - Update - Protected Route
+ * Changes the password of the user
+ * req.body needs to provide the fields "userId", "oldPassword", "newPassword" 
+ * Response-Status: 200, 401, 500
+ */
 exports.change_password = async (req, res) => {
     const userId = req.body.userId;
     const oldPw = req.body.oldPassword;

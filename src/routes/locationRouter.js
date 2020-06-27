@@ -1,3 +1,4 @@
+//init router, middleware, and controller
 const express = require("express");
 const router = express.Router();
 const { jwtMW } = require("../middleware/jwtMiddleware");

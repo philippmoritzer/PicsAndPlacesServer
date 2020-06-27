@@ -18,7 +18,12 @@ const { location } = require('../models/location');
 const { tour } = require('../models/tour');
 const { rating } = require('../models/rating');
 
-
+/**
+ * GET - Select
+ * Returns all ragins for user
+ * :userId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_ratings_for_user = async (req, res) => {
     await getRatingsForUser(req.params.userId).then(result => {
         let ratings = [];
@@ -33,6 +38,13 @@ exports.get_ratings_for_user = async (req, res) => {
     });
 }
 
+
+/**
+ * GET - Select
+ * Returns all locations for user
+ * :userId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_location_by_user_id = async (req, res) => {
     await getLocationByUserId(req.params.userId).then(result => {
         let locations = [];
@@ -46,6 +58,12 @@ exports.get_location_by_user_id = async (req, res) => {
 
 };
 
+/**
+ * GET - Select
+ * Returns all tours for user
+ * :userId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_tour_by_user_id = async (req, res) => {
     await getTourByUserId(req.params.userId).then(result => {
         let tours = [];
@@ -64,6 +82,12 @@ exports.get_tour_by_user_id = async (req, res) => {
     })
 }
 
+/**
+ * GET - Select
+ * Returns user info
+ * :userId needs to be provided in url
+ * Response Status 200, 500
+ */
 exports.get_user_info = async (req, res) => {
     await getUserInfo(req.params.userId).then(result => {
         let user = {

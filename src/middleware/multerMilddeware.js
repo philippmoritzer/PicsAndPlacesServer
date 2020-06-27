@@ -1,7 +1,9 @@
-//initialize multer storage for file upload
-const multer = require("multer");
-const pify = require("pify");
 
+const multer = require("multer");
+const pify = require("pify"); //needed to promisify upload-export
+
+
+//initialize multer storage for file upload
 var storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, "./media-upload");
@@ -10,6 +12,9 @@ var storage = multer.diskStorage({
     }
 })
 
+
+//export upload-function needed for incoming requests
+//as middleware
 var upload = pify(multer({
     storage: storage
 }).single("media"));

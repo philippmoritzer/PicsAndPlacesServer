@@ -6,14 +6,22 @@ const {
   updateCategory,
 } = require("../database/category");
 
+/**
+ * GET - Select
+ * Returns all categories
+ * Response Status 200, 500
+ */
 exports.get_categories = async (req, res) => {
   await getCategories().then(result => {
-    res.json(result);
+    res.status(200).json(result);
   }).catch(error => {
-    res.status(401).send(error);
+    res.status(500).json(error);
   });
 
 };
+
+
+// Methods below are mostly unused, but can be handy in the future
 
 exports.get_category_by_id = async (req, res) => {
   await getCategoryById(req.params.id).then(result => {
